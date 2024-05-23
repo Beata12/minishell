@@ -6,11 +6,12 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/23 08:39:02 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/23 12:33:03 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header_files/minishell.h"
+
 
 void	display_prompt(void)
 {
@@ -28,7 +29,9 @@ void	display_prompt(void)
 		free(cwd);
 		exit(EXIT_FAILURE);
 	}
+
 	printf("%s@minishell:%s$ ", username, cwd);
+
 	free(cwd);
 }
 
