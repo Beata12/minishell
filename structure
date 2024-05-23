@@ -1,0 +1,19 @@
+main.c - could be minishell.c
+prompt.c
+parser.c
+executor.c
+
+shell_commands
+	echo.c
+	cd.c
+	pwd.c
+	export.c
+	unset.c
+	env.c
+	exit.c
+
+header files:
+	minishell.h
+	shell_commands.h
+
+Makefile
