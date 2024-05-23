@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/22 17:49:11 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:36:42 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,14 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include<limits.h>
 
 // Function prototypes
-void display_prompt();
+void display_prompt(char **envp);
+void execute_command(char **argv , char **envp);
+//void load_history();
+//void save_history();
 
 #endif
