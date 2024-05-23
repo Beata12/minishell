@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/23 12:09:30 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:11:26 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void display_prompt() {
 }
 
 int main(void) {
-   // display_prompt();
+	display_prompt();
     return 0;
 }
