@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/23 17:37:00 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:51:26 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 char *find_executable(char *cmd) {
     char *path_env = getenv("PATH");
-    if (!path_env) return NULL;
+    if (!path_env) 
+		return NULL;
 
     char *path = strdup(path_env);
-    if (!path) return NULL;
+    if (!path) 
+		return NULL;
 
     char *dir = strtok(path, ":");
     while (dir) {
         char full_path[PATH_MAX];
-        snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd);
+		shell_echo(&cmd);
+      snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd);
         if (access(full_path, X_OK) == 0) {
             free(path);
             return strdup(full_path);
@@ -83,8 +86,15 @@ void display_prompt(char **envp) {
     char *argv[100];
 
     while (1) {
+		char *cwd = getcwd(NULL, 0);
+		if (cwd == NULL)
+		{
+			perror("getcwd() error");
+			exit(EXIT_FAILURE);
+		}
+		printf("%s$ ", cwd);
         // Display the prompt and read input
-        input = readline("minishell> ");
+        input = readline(NULL);
 
         // If readline encounters EOF, it returns NULL
         if (!input) {
