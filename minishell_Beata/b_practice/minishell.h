@@ -6,18 +6,22 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 12:52:54 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:20:37 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define HISTORY_FILE ".minishell_history"
 
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <dirent.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -42,13 +46,13 @@ int		my_strlen(const char *s);
 char	*my_strdup(char *src);
 char	*my_strtok(char *str, const char *delimiters);
 
-//shell_commands
 int		shell_cd(char **args);
 int		shell_echo(char **args);
-int		shell_env(void);
-int		shell_exit(void);
+int		shell_env(char **env);
+int		shell_exit(char **args);
 int		shell_export(char *arg);
-int		shell_pwd(void);
+int		shell_pwd(char **argv);
 int		shell_unset(char **args);
+int ft_newline(char **av);
 
 #endif

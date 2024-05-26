@@ -6,11 +6,11 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:59 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 12:36:07 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 13:37:17 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header_files/shell_commands.h"
+#include "../minishell.h"
 
 int shell_unset(char **args)
 {

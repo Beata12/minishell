@@ -6,18 +6,22 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:56 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 10:48:25 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 12:49:31 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header_files/shell_commands.h"
+#include "../minishell.h"
 
-int shell_pwd(void)
+int shell_pwd(char **argv)
 {
-    char *cwd;
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("%s\n", cwd);
-	else
-        perror("pwd");
-    return (0);
+	(void)argv;
+	char *cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		perror("getcwd() error");
+		exit(EXIT_FAILURE);
+	}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }

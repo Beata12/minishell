@@ -4,12 +4,12 @@ parser.c
 executor.c
 
 shell_commands
-	echo.c
-	cd.c
-	pwd.c
+# echo.c
+# cd.c
+# pwd.c
 	export.c
 	unset.c
-	env.c
+# env.c
 	exit.c
 
 	touch.c

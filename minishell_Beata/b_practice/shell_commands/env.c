@@ -6,16 +6,16 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:40 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 12:35:11 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 12:22:41 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header_files/shell_commands.h"
+#include "../minishell.h"
 
-int shell_env(void)
+int shell_env(char **env)
 {
     extern char **environ;
-    for (char **env = environ; *env != 0; env++)
+    for (env = environ; *env != 0; env++)
         printf("%s\n", *env);
     return (0);
 }

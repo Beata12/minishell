@@ -6,11 +6,11 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 12:35:46 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 13:45:39 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header_files/shell_commands.h"
+#include "../minishell.h"
 
 int shell_export(char *arg)
 {

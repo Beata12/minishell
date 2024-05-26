@@ -6,11 +6,12 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 09:58:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 13:00:05 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:30:22 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+// #define HISTORY_FILE ".minishell_history"
 
 void display_prompt(void)
 {
@@ -23,7 +24,6 @@ void display_prompt(void)
 	printf("@minishell:%s$ ", cwd);
 	free(cwd);
 }
-
 
 //tokenization
 Token *tokenize(char *command, int *token_count)
@@ -79,6 +79,36 @@ int	parse_tokens(Token *tokens, int token_count)
 	}
 	return (1);
 }
+int ft_newline(char **av)
+{
+	(void)av;
+	printf("\n");
+	return (0);
+}
+
+int ft_execvp(const char *args, char **argv)
+{
+	if (my_strcmp(args, "echo") == 0)
+		return (shell_echo(argv));
+	else if (my_strcmp(args, "env") == 0)
+		return (shell_env(argv));
+	else if (my_strcmp(args, "cd") == 0)
+		return (shell_cd(argv));
+	else if (my_strcmp(args, "exit") == 0)
+		return (shell_exit(argv));
+	else if (my_strcmp(args, "pwd") == 0)
+		return (shell_pwd(argv));
+	else if (my_strcmp(args, "export") == 0)
+		return (shell_export(argv[0]));
+		// return (shell_export(argv));
+	else if (my_strcmp(args, "unset") == 0)
+		return (shell_unset(argv));
+	else if (my_strcmp(args, "\n") == 0)
+		return ft_newline(argv);
+	else
+		printf("command not found\n");
+	return (0);
+}
 
 //execution
 void	execute_command(Token *tokens, int token_count)
@@ -105,7 +135,7 @@ void	execute_command(Token *tokens, int token_count)
 	}
 	else if (pid == 0)
 	{
-		if (execvp(args[0], args) < 0)
+		if (ft_execvp(args[0], args) == 1)
 		{
 			perror("execvp() error");
 			exit(EXIT_FAILURE);
@@ -113,6 +143,18 @@ void	execute_command(Token *tokens, int token_count)
 	}
 	else
 		wait(NULL);
+}
+
+void load_history() 
+{
+	
+    int n = read_history(HISTORY_FILE);
+	if (n != 0) {
+    	fprintf(stderr, "Error loading command history\n");}
+}
+
+void save_history() {
+    write_history(HISTORY_FILE);
 }
 
 //main
@@ -123,6 +165,9 @@ int	main(void)
 	int		i;
 
 	i = 0;
+	
+	load_history();
+	
 	while (1)
 	{
 		display_prompt();
@@ -135,7 +180,7 @@ int	main(void)
 			Token	*tokens = tokenize(command, &token_count);
 			if (parse_tokens(tokens, token_count))
 			{
-				if (strcmp(tokens[0].value, "echo") == 0)
+				// if (strcmp(tokens[0].value, "touch") == 0)
 					// shell_echo(&tokens[1].value);
 					execute_command(tokens, token_count);
 			}
@@ -148,5 +193,6 @@ int	main(void)
 		}
 		free(command);
 	}
+	save_history();
 	return (0);
 }

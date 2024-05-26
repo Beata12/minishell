@@ -6,7 +6,7 @@
 #    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#              #
-#    Updated: 2024/05/24 12:47:22 by bmarek           ###   ########.fr        #
+#    Updated: 2024/05/26 13:37:09 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,12 @@ MAKE_LIB = ar -rcs
 SRCS = mini.c \
 		utils.c \
 		echo.c \
+		shell_commands/env.c \
+		shell_commands/cd.c \
+		shell_commands/exit.c \
+		shell_commands/pwd.c \
+		shell_commands/export.c \
+		shell_commands/unset.c \
 		# shell_commands/echo.c
 
 OBJS = $(SRCS:.c=.o)
@@ -29,12 +35,12 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@ -lreadline
+	$(CC) -o $(NAME) $(OBJS) -lreadline
 # make title
 # @curl 'http://141.148.244.146:8080/ansi?start=3cc322&end=fdbb2d&padding=5&text=MiniShell'
 
-$(OBJS) : $(SRCS)
-	$(CC) $(CFLAGS) -c $^ 
+# $(OBJS) : $(SRCS)
+# 	$(CC) $(CFLAGS) -c $^ 
 
 clean :
 	rm -f $(OBJS)
