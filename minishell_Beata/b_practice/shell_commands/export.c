@@ -6,13 +6,14 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 10:47:33 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:35:46 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/shell_commands.h"
 
-int shell_export(char *arg) {
+int shell_export(char *arg)
+{
     char *equals = strchr(arg, '=');
 
     if (!equals)
@@ -30,23 +31,23 @@ int shell_export(char *arg) {
     return 0;
 }
 
-int main(int argc, char *argv[])
-{
-    int result = shell_export(argv[1]);
+// int main(int argc, char *argv[])
+// {
+//     int result = shell_export(argv[1]);
 
-    if (argc != 2)
-	{
-        fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
-        return 1;
-    }
-    if (result != 0)
-	{
-        fprintf(stderr, "Error: Failed to export variable\n");
-        return 1;
-    }
-    printf("Variable exported successfully\n");
-    return 0;
-}
+//     if (argc != 2)
+// 	{
+//         fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
+//         return 1;
+//     }
+//     if (result != 0)
+// 	{
+//         fprintf(stderr, "Error: Failed to export variable\n");
+//         return 1;
+//     }
+//     printf("Variable exported successfully\n");
+//     return 0;
+// }
 
 //	check like this:
 //	./a.out MY_VAR=my_value

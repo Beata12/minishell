@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 09:58:56 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/24 10:48:25 by bmarek           ###   ########.fr       */
+/*   Created: 2024/05/23 09:58:40 by bmarek            #+#    #+#             */
+/*   Updated: 2024/05/24 12:35:11 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/shell_commands.h"
 
-int shell_pwd(void)
+int shell_env(void)
 {
-    char *cwd;
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("%s\n", cwd);
-	else
-        perror("pwd");
+    extern char **environ;
+    for (char **env = environ; *env != 0; env++)
+        printf("%s\n", *env);
     return (0);
 }
+
+// int main()
+// {
+//     shell_env();
+//     return (0);
+// }
