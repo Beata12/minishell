@@ -14,14 +14,14 @@ Minishell is a project which is creating a simple shell in C, reproducing the be
 - Double quotes (") prevent interpretation of metacharacters except for the dollar sign ($).
 
 ## Redirections:
-- < redirects input.
-- > redirects output.
-- << reads input until a given delimiter line.
-- >> appends redirected output.
+- '<' redirects input.
+- '>' redirects output.
+- '<<' reads input until a given delimiter line.
+- '>>' appends redirected output.
 
 ## Pipes (|): 
 - Connects the output of one command to the input of the next.
-- 
+
 ## Environment Variables: 
 - Expands variables prefixed with $ to their values.
 ## Exit Status ($?): 
