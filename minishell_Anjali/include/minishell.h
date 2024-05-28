@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/26 14:44:14 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:17:03 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 // Function prototypes
 void display_prompt(char **envp);
-void execute_command(char **argv , char **envp);
+void execute_command(char **args);
 void load_history();
 void save_history();
 

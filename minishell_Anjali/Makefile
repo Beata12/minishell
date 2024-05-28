@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
+#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/23 12:24:24 by bmarek           ###   ########.fr        #
+#    Updated: 2024/05/26 15:14:19 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 #  CFLAGS += -fsanitize=memory
 
-SRCS = src/minishell.c
+SRCS =  src/test.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lreadline
+	$(CC) -o $(NAME) $(OBJS) -lreadline
 
 clean:
 	rm -f $(OBJS)
