@@ -6,7 +6,7 @@
 #    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#              #
-#    Updated: 2024/05/26 13:37:09 by bmarek           ###   ########.fr        #
+#    Updated: 2024/05/28 16:25:34 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MAKE_LIB = ar -rcs
 
 SRCS = mini.c \
 		utils.c \
-		echo.c \
+		shell_commands/echo.c \
 		shell_commands/env.c \
 		shell_commands/cd.c \
 		shell_commands/exit.c \

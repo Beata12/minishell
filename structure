@@ -21,7 +21,7 @@ shell_commands
 	history.c
 	controling keebord (ctr-d, crtl-c, ctrl-\)
 	handle semicolens, backslash 
-	handle qutations "" ''
+	handle qutations "" '' !! important
 	handle redaraction
 	Handle $?
 	handle $ symbol
@@ -33,3 +33,5 @@ header files:
 	Implement pipes
 
 Makefile
+
+split function to make parsing work better

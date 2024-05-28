@@ -6,12 +6,11 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 10:43:14 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:26:14 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../minishell.h"
-#include "minishell.h"
+#include "../minishell.h"
 
 int shell_echo(char **args)
 {
