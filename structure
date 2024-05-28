@@ -1,6 +1,10 @@
 main.c - could be minishell.c
 prompt.c
+
+PARSING
 parser.c
+
+EXECUTION
 executor.c
 
 shell_commands
