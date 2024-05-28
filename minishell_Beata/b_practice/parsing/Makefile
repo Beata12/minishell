@@ -6,7 +6,7 @@
 #    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#              #
-#    Updated: 2024/05/28 11:34:09 by bmarek           ###   ########.fr        #
+#    Updated: 2024/05/28 15:42:13 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -g -O2 -Iinclude
 
 MAKE_LIB = ar -rcs
 
-SRCS = parsing.c \
+SRCS = parser2.c \
 
 OBJS = $(SRCS:.c=.o)
 
