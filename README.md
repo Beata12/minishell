@@ -39,7 +39,3 @@ Minishell is a project which is creating a simple shell in C, reproducing the be
 - export without options
 - env without options or arguments
 - exit without options
-
-## Memory Management
-Be mindful of memory leaks in your code. The readline() function may cause memory leaks, which you do not need to fix. However, ensure that your own code is free of memory leaks.
-
