@@ -107,17 +107,17 @@ void parse_tokens(Token *tokens, int token_count)
 		else if (action == ACCEPT)
 		{
             printf("Parsing completed successfully.\n");
-            free(stack); // zwolnienie pamięci stosu
+            free(stack);
             return;
         }
 		else
 		{
             printf("Syntax error.\n");
-            free(stack); // zwolnienie pamięci stosu
+            free(stack);
             return;
         }
     }
-    free(stack); // zwolnienie pamięci stosu
+    free(stack);
 }
 
 // Simple lexical function (lexer) to tokenize the input
