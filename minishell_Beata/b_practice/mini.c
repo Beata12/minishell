@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 09:58:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 14:30:22 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:39:01 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,12 @@ int ft_execvp(const char *args, char **argv)
 		return (shell_exit(argv));
 	else if (my_strcmp(args, "pwd") == 0)
 		return (shell_pwd(argv));
-	else if (my_strcmp(args, "export") == 0)
-		return (shell_export(argv[0]));
-		// return (shell_export(argv));
+	// else if (my_strcmp(args, "export") == 0)
+	// 	return (shell_export(argv[0]));
+	// 	// return (shell_export(argv));
 	else if (my_strcmp(args, "unset") == 0)
-		return (shell_unset(argv));
+		{shell_unset(argv);
+		return (0);}
 	else if (my_strcmp(args, "\n") == 0)
 		return ft_newline(argv);
 	else
@@ -128,21 +129,23 @@ void	execute_command(Token *tokens, int token_count)
 	}
 	args[arg_count] = NULL;
 	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork() error");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		if (ft_execvp(args[0], args) == 1)
+		if (pid < 0)
 		{
-			perror("execvp() error");
+			perror("fork() error");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-		wait(NULL);
+		else if (pid == 0)
+		{
+			if (ft_execvp(args[0], args) == 1)
+			{
+				perror("execvp() error");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+			wait(NULL);
+	// 	i++;
+	// }
 }
 
 void load_history() 
@@ -178,11 +181,12 @@ int	main(void)
 		{
 			add_history(command);
 			Token	*tokens = tokenize(command, &token_count);
+
 			if (parse_tokens(tokens, token_count))
 			{
 				// if (strcmp(tokens[0].value, "touch") == 0)
 					// shell_echo(&tokens[1].value);
-					execute_command(tokens, token_count);
+				execute_command(tokens, token_count);
 			}
 			while (i < token_count)
 			{

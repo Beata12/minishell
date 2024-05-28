@@ -3,33 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 13:45:39 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:39:33 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+// #include "../minishell.h"
 
-int shell_export(char *arg)
-{
-    char *equals = strchr(arg, '=');
+// extern char **environ;
 
-    if (!equals)
-	{
-        fprintf(stderr, "Invalid argument format: %s\n", arg);
-        return 1;
-    }
-    *equals = '\0';  // Splitting the argument into variable name and value
-    int result = setenv(arg, equals + 1, 1); // Setting the environment variable
-    if (result != 0)
-	{
-        perror("setenv");
-        return 1;
-    }
-    return 0;
-}
+// void shell_export(char *args)
+// {
+//     if (args[1] == NULL) {
+//         // No argument, print all environment variables
+//         for (char **env = environ; *env != 0; env++) {
+//             printf("%s\n", *env);
+//         }
+//     } else {
+//         // Parse the argument
+//         char *name = strtok(args[1], "=");
+//         char *value = strtok(NULL, "=");
+
+//         if (name && value) {
+//             // Find if the variable already exists
+//             int index = find_env_var(name);
+//             if (index != -1) {
+//                 // Replace existing value
+//                 size_t len = strlen(name) + strlen(value) + 2;
+//                 char *new_env_var = malloc(len);
+//                 snprintf(new_env_var, len, "%s=%s", name, value);
+//                 environ[index] = new_env_var;
+//             } else {
+//                 // Add new environment variable
+//                 size_t len = strlen(name) + strlen(value) + 2;
+//                 char *new_env_var = malloc(len);
+//                 snprintf(new_env_var, len, "%s=%s", name, value);
+
+//                 // Count current environment variables
+//                 int env_count = 0;
+//                 while (environ[env_count] != NULL) {
+//                     env_count++;
+//                 }
+
+//                 // Allocate space for the new environment variable
+//                 environ = realloc(environ, (env_count + 2) * sizeof(char *));
+//                 environ[env_count] = new_env_var;
+//                 environ[env_count + 1] = NULL;
+//             }
+//         } else {
+//             fprintf(stderr, "minishell: export: invalid format\n");
+//         }
+//     }
+// }
+
+
+
+// {
+//     char *equals = strchr(arg, '=');
+
+//     if (!equals)
+// 	{
+//         fprintf(stderr, "Invalid argument format: %s\n", arg);
+//         return 1;
+//     }
+//     *equals = '\0';  // Splitting the argument into variable name and value
+//     int result = setenv(arg, equals + 1, 1); // Setting the environment variable
+//     if (result != 0)
+// 	{
+//         perror("setenv");
+//         return 1;
+//     }
+//     return 0;
+// }
 
 // int main(int argc, char *argv[])
 // {

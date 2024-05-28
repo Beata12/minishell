@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:08:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 14:20:37 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:26:55 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int		shell_cd(char **args);
 int		shell_echo(char **args);
 int		shell_env(char **env);
 int		shell_exit(char **args);
-int		shell_export(char *arg);
+void		shell_export(char *arg);
 int		shell_pwd(char **argv);
-int		shell_unset(char **args);
+void	shell_unset(char **args);
 int ft_newline(char **av);
 
 #endif

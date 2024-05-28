@@ -3,30 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:59 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 13:37:17 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:22:36 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int shell_unset(char **args)
-{
-    if (!args[1])
-	{
-        fprintf(stderr, "unset: missing argument\n");
-        return 1;
+
+extern char **environ;
+
+int find_env_var(const char *name) {
+    int len = strlen(name);
+    for (int i = 0; environ[i] != NULL; i++) {
+        if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=') {
+            return i;
+        }
     }
-    if (unsetenv(args[1]) != 0)
-	{
-        perror("unset");
-        return 1;
-    }
-    return (0);
+    return -1;
 }
 
+void shell_unset(char **args)
+{
+    if (args[1] == NULL) {
+        fprintf(stderr, "minishell: expected argument to \"unset\"\n");
+        return;
+    }
+    int index = find_env_var(args[1]);
+    if (index == -1) {
+        fprintf(stderr, "minishell: environment variable '%s' not found\n", args[1]);
+        return;
+    }
+
+    // Free the memory allocated for the environment variable string
+    free(environ[index]);
+
+    // Shift the remaining variables up by one
+    for (int i = index; environ[i] != NULL; i++) {
+        environ[i] = environ[i + 1];
+    }
+}
 
 // int main()
 // {

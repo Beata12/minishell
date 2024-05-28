@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:56 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/26 12:49:31 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:48:33 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int shell_pwd(char **argv)
 {
-	(void)argv;
+	if (*argv == NULL)
+		return (0);
 	char *cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
