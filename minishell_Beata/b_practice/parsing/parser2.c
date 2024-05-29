@@ -20,105 +20,192 @@ typedef struct {
     char value[256];// Value of the token, assuming max length 256 characters
 } Token;
 
-// Simple lexical function (lexer) for tokenizing input
 int lex(const char *input, Token *tokens)
 {
-    int token_count;   // Counter for tokens
+    int token_count = 0;   // Counter for tokens
     const char *ptr = input;   // Pointer to traverse the input string
+    int in_quotes = 0; // Flag indicating if currently inside quotes
 
-	token_count = 0;
     while (*ptr != '\0') // Loop until the end of the input string
-	{
-        // Skip whitespace
-        while (isspace(*ptr))
-		{
-            printf("Whitespace found, skipping...\n");
+    {
+        // Skip whitespace if not inside quotes
+        if (!in_quotes && isspace(*ptr))
+        {
             ptr++;
+            continue;
         }
-        if (*ptr == '\0')
-			break;  // Break if end of string
+
+        // Check if inside quotes
+        if (*ptr == '"' || *ptr == '\'')
+        {
+            // Handle quotes
+            printf("%c quote found, processing...\n", *ptr);
+            tokens[token_count].type = T_QUOTE;
+            int len = 0;
+            char quote_char = *ptr++; // Save the quote character and move to the next character
+            in_quotes = 1; // Set the flag indicating we're inside quotes
+            while (*ptr != '\0' && *ptr != quote_char)
+            {
+                tokens[token_count].value[len++] = *ptr++;
+            }
+            if (*ptr == quote_char)
+            {
+                printf("End %c quote found, adding token: \"%s\"\n", quote_char, tokens[token_count].value);
+                ptr++; // Skip the ending quote
+            }
+            else
+            {
+                // Handle unclosed quote
+                fprintf(stderr, "Error: Unclosed %c quote detected\n", quote_char);
+                return 0;
+            }
+            tokens[token_count].value[len] = '\0';
+            token_count++;
+            in_quotes = 0; // Reset the flag indicating we're outside quotes
+            continue;
+        }
+
+        // Handle other cases (words, pipes, etc.)
         if (*ptr == '|')
-		{
+        {
             // Handle pipe character
             printf("Pipe found, adding token...\n");
             tokens[token_count].type = T_PIPE;
             tokens[token_count].value[0] = *ptr;
             tokens[token_count].value[1] = '\0';
             ptr++;
+            token_count++;
+            continue;
         }
-		else if (*ptr == '"') {
-            // Handle double quotes
-            printf("Double quote found, processing...\n");
-            tokens[token_count].type = T_QUOTE;
-            int len = 0;
-            ptr++; // Skip the starting quote
-            while (*ptr != '\0' && *ptr != '"' && len < 255)
-			{
-                if (*ptr == '$')
-				{
-                    // Handle environment variables inside double quotes
-                    tokens[token_count].value[len++] = *ptr++;
-                    while (isalnum(*ptr) || *ptr == '_')
-                        tokens[token_count].value[len++] = *ptr++;
-                }
-				else
-                    tokens[token_count].value[len++] = *ptr++;
-            }
-            if (*ptr == '"')
-			{
-                printf("End double quote found, adding token: \"%s\"\n", tokens[token_count].value);
-                ptr++; // Skip the ending quote
-            }
-			else
-			{
-                // Handle unclosed double quote
-                fprintf(stderr, "Error: Unclosed double quote detected\n");
-                return 0;
-            }
-            tokens[token_count].value[len] = '\0';
-        }
-		else if (*ptr == '\'')
-		{
-            // Handle single quotes
-            printf("Single quote found, processing...\n");
-            tokens[token_count].type = T_QUOTE;
-            int len = 0;
-            ptr++; // Skip the starting quote
-            while (*ptr != '\0' && *ptr != '\'' && len < 255)
-                tokens[token_count].value[len++] = *ptr++;
-            if (*ptr == '\'')
-			{
-                printf("End single quote found, adding token: '%s'\n", tokens[token_count].value);
-                ptr++; // Skip the ending quote
-            }
-			else
-			{
-                // Handle unclosed single quote
-                fprintf(stderr, "Error: Unclosed single quote detected\n");
-                return 0;
-            }
-            tokens[token_count].value[len] = '\0';
-        }
-		else if (*ptr == '\\' || *ptr == ';')
-		{
+        else if (*ptr == '\\' || *ptr == ';')
+        {
             // Ignore backslash and semicolon characters
             printf("Ignoring special character: %c\n", *ptr);
             ptr++;
+            continue;
         }
-		else
-		{
+        else
+        {
             // Handle words
             int len = 0;
             while (*ptr != '\0' && !isspace(*ptr) && *ptr != '|' && *ptr != '"' && *ptr != '\'' && *ptr != '\\' && *ptr != ';' && len < 255)
+            {
                 tokens[token_count].value[len++] = *ptr++;
+            }
             tokens[token_count].value[len] = '\0';
             tokens[token_count].type = T_WORD;
             printf("Processing word: %s\n", tokens[token_count].value);
+            token_count++;
+            continue;
         }
-        token_count++;
+
+        // Move to the next character
+        ptr++;
     }
+
     return token_count; // Return the number of tokens
 }
+
+
+// Simple lexical function (lexer) for tokenizing input
+// int lex(const char *input, Token *tokens)
+// {
+//     int token_count;   // Counter for tokens
+//     const char *ptr = input;   // Pointer to traverse the input string
+
+// 	token_count = 0;
+//     while (*ptr != '\0') // Loop until the end of the input string
+// 	{
+//         // Skip whitespace
+//         while (isspace(*ptr))
+// 		{
+//             printf("Whitespace found, skipping...\n");
+//             ptr++;
+//         }
+//         if (*ptr == '\0')
+// 			break;  // Break if end of string
+//         if (*ptr == '|')
+// 		{
+//             // Handle pipe character
+//             printf("Pipe found, adding token...\n");
+//             tokens[token_count].type = T_PIPE;
+//             tokens[token_count].value[0] = *ptr;
+//             tokens[token_count].value[1] = '\0';
+//             ptr++;
+//         }
+// 		else if (*ptr == '"') {
+//             // Handle double quotes
+//             printf("Double quote found, processing...\n");
+//             tokens[token_count].type = T_QUOTE;
+//             int len = 0;
+//             ptr++; // Skip the starting quote
+//             while (*ptr != '\0' && *ptr != '"' && len < 255)
+// 			{
+//                 if (*ptr == '$')
+// 				{
+//                     // Handle environment variables inside double quotes
+//                     tokens[token_count].value[len++] = *ptr++;
+//                     while (isalnum(*ptr) || *ptr == '_')
+//                         tokens[token_count].value[len++] = *ptr++;
+//                 }
+// 				else
+//                     tokens[token_count].value[len++] = *ptr++;
+//             }
+//             if (*ptr == '"')
+// 			{
+//                 printf("End double quote found, adding token: \"%s\"\n", tokens[token_count].value);
+//                 ptr++; // Skip the ending quote
+//             }
+// 			else
+// 			{
+//                 // Handle unclosed double quote
+//                 fprintf(stderr, "Error: Unclosed double quote detected\n");
+//                 return 0;
+//             }
+//             tokens[token_count].value[len] = '\0';
+//         }
+// 		else if (*ptr == '\'')
+// 		{
+//             // Handle single quotes
+//             printf("Single quote found, processing...\n");
+//             tokens[token_count].type = T_QUOTE;
+//             int len = 0;
+//             ptr++; // Skip the starting quote
+//             while (*ptr != '\0' && *ptr != '\'' && len < 255)
+//                 tokens[token_count].value[len++] = *ptr++;
+//             if (*ptr == '\'')
+// 			{
+//                 printf("End single quote found, adding token: '%s'\n", tokens[token_count].value);
+//                 ptr++; // Skip the ending quote
+//             }
+// 			else
+// 			{
+//                 // Handle unclosed single quote
+//                 fprintf(stderr, "Error: Unclosed single quote detected\n");
+//                 return 0;
+//             }
+//             tokens[token_count].value[len] = '\0';
+//         }
+// 		else if (*ptr == '\\' || *ptr == ';')
+// 		{
+//             // Ignore backslash and semicolon characters
+//             printf("Ignoring special character: %c\n", *ptr);
+//             ptr++;
+//         }
+// 		else
+// 		{
+//             // Handle words
+//             int len = 0;
+//             while (*ptr != '\0' && !isspace(*ptr) && *ptr != '|' && *ptr != '"' && *ptr != '\'' && *ptr != '\\' && *ptr != ';' && len < 255)
+//                 tokens[token_count].value[len++] = *ptr++;
+//             tokens[token_count].value[len] = '\0';
+//             tokens[token_count].type = T_WORD;
+//             printf("Processing word: %s\n", tokens[token_count].value);
+//         }
+//         token_count++;
+//     }
+//     return token_count; // Return the number of tokens
+// }
 
 // Function to print token information
 void print_token_info(Token *tokens, int token_count)
@@ -194,10 +281,12 @@ int main(int argc, char **argv) {
 			strcat(command, " ");
 		i++; // Increment counter
 	}
+
 	parser(command); // Parse the command
 	free(command); // Free the allocated memory
 	return 0;
 }
+
 
 //PRINTING LETTER BY LETTER
 // #include <stdio.h>

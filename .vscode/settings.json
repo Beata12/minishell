@@ -4,6 +4,7 @@
 		"history.h": "c",
 		"shell_commands.h": "c",
 		"dirent.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"wait.h": "c"
 	}
 }
