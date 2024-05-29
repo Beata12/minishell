@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:41:31 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:58:26 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void		shell_export(char *arg);
 int		shell_pwd(char **argv);
 void	shell_unset(char **args);
 int ft_newline(char **av);
+void parser(char *input_command);
 #endif

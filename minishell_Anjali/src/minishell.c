@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 16:01:24 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:50:49 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,7 @@ int ft_newline(char **av)
 int ft_execvp(const char *args, char **argv)
 {
 	if (my_strcmp(args, "echo") == 0)
-	{
-            return (shell_echo(argv));
-    }
+		return (shell_echo(argv));
 	else if (my_strcmp(args, "env") == 0)
 		return (shell_env(argv));
 	else if (my_strcmp(args, "cd") == 0)
@@ -178,7 +176,7 @@ void error_str(void)
 void display_prompt(void)
 {
     char *input;
-    char **argv;
+
 
     load_history();
     while (1) {
@@ -190,34 +188,17 @@ void display_prompt(void)
         if (*input) {
             add_history(input);
         }
-        argv = split_input(input);
-        if (argv[1] != NULL) {
-            execute_command(argv);
-        }
-       
+        parser(input);
         free(input);
-        free(argv);
     }
     save_history();
 }
 
 int main(int argc, char **argv)
-{
-    int i = 1; // Initialize counter
-    display_prompt();
-    printf("my%s", argv[0]);
-	if (argc < 1) // Check if there are enough arguments
-	{
-		printf("Usage: %s <command>\n", argv[0]);
-		return 1;
-	}
-	size_t length = 0; // Calculate the total length of the command
-	while (i < argc)
-	{
-		length += strlen(argv[i]) + 1;
-		i++; // Increment counter
-	}
+{	if (!argc && !argv)
+		return (0);
     g_exit_status = 0;
     setup_signal_handlers();
+    display_prompt();
     return g_exit_status;
 }

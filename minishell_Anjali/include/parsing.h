@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/28 11:29:56 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/29 18:02:53 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@
 # include <readline/history.h>
 #include <stdbool.h>
 
+typedef enum e_token_types {
+    T_WORD = 0,     // Word token
+    T_RED_TO,       // Redirection to (>)
+    T_RED_FROM,     // Redirection from (<)
+    T_DLESS,        // Here-document (<<)
+    T_DGREAT,       // Append (>>)
+    T_PIPE,         // Pipe (|)
+    T_QUOTE,        // Quote (single or double)
+    T_ERROR         // Error token
+} t_token_types;
+
 // Definicje typów tokenów
 typedef enum {
     TOKEN_WORD,
@@ -33,6 +44,13 @@ typedef enum {
     TOKEN_REDIRECTION_OUT,
     TOKEN_END
 } t_token_type;
+
+typedef struct Token1
+{
+    int		type;
+    char	value[256];
+}				Token;
+
 
 // Struktura tokena
 typedef struct s_token {
