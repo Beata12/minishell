@@ -82,8 +82,8 @@ void print_token_info(Token *tokens, int token_count) {
             case T_RED_FROM: printf("RED_FROM"); break;
             case T_DLESS: printf("DLESS"); break;
             case T_DGREAT: printf("DGREAT"); break;
-            case T_PIPE: printf("PIPE"); break;
             case T_QUOTE: printf("QUOTE"); break;
+            case T_PIPE: printf("PIPE"); break;
             default: printf("ERROR"); break;
         }
         printf(", wartość: %s\n", tokens[i].value);
