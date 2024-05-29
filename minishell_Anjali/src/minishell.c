@@ -6,21 +6,29 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/26 15:09:01 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:14:49 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 #define HISTORY_FILE ".minishell_history"
+int g_exit_status;
 
 // Signal handlers
-void handle_sigint(int sig) {
-    (void)sig;
-    // Use rl_replace_line and rl_redisplay to properly handle the prompt display
-    rl_replace_line("", 0);
+void handle_sigint(int sig)
+{
+    g_exit_status = 130;
+    printf("\n");
     rl_on_new_line();
+    rl_replace_line("", 0);
     rl_redisplay();
+
+    if (sig == SIGTSTP || sig == SIGQUIT)
+    {
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
 }
 
 void handle_sigquit(int sig) {
@@ -28,19 +36,17 @@ void handle_sigquit(int sig) {
     // Do nothing on Ctrl-
 }
 
-void setup_signal_handlers() {
-    struct sigaction sa_int;
-    struct sigaction sa_quit;
+void setup_signal_handlers(void) 
+{
+	struct sigaction	sa;
 
-    sa_int.sa_handler = handle_sigint;
-    sigemptyset(&sa_int.sa_mask);
-    sa_int.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa_int, NULL);
-
-    sa_quit.sa_handler = handle_sigquit;
-    sigemptyset(&sa_quit.sa_mask);
-    sa_quit.sa_flags = SA_RESTART;
-    sigaction(SIGQUIT, &sa_quit, NULL);
+	sa.sa_handler = handle_sigint;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	rl_catch_signals = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL);
 }
 
 void load_history() {
@@ -51,106 +57,109 @@ void save_history() {
     write_history(HISTORY_FILE);
 }
 
-char *find_executable(char *cmd) {
-    char *path_env = getenv("PATH");
-    if (!path_env) return NULL;
+char **split_input(char *input) {
+    char **args = malloc(64 * sizeof(char*)); // Allocate space for 64 arguments
+    char *arg;
+    int position = 0;
 
-    char *path = strdup(path_env);
-    if (!path) return NULL;
-
-    char *dir = strtok(path, ":");
-    while (dir) {
-        char full_path[PATH_MAX];
-        snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd);
-        if (access(full_path, X_OK) == 0) {
-            free(path);
-            return strdup(full_path);
-        }
-        dir = strtok(NULL, ":");
+    arg = strtok(input, " "); // Split input by spaces
+    while (arg != NULL) {
+        args[position++] = arg;
+        arg = strtok(NULL, " ");
     }
-    free(path);
+    args[position] = NULL; // Null-terminate the array of arguments
+    return args;
+}
+
+// Function to find the full path of an executable
+char *find_executable(char *command) {
+    char *path = getenv("PATH");
+    char *token;
+    char full_path[1024];
+
+    // If the command is an absolute or relative path, return it directly
+    if (strchr(command, '/') != NULL) {
+        return command;
+    }
+
+    // Search for the command in the PATH directories
+    token = strtok(path, ":");
+    while (token != NULL) {
+        snprintf(full_path, sizeof(full_path), "%s/%s", token, command);
+        if (access(full_path, X_OK) == 0) {
+            return strdup(full_path); // Return a copy of the full path
+        }
+        token = strtok(NULL, ":");
+    }
     return NULL;
 }
 
-void execute_command(char **argv, char **envp) {
-    pid_t pid;
-    int status;
+// Function to execute a command
+void execute_command(char **args) {
+    char *command = args[0];
+    char *executable = find_executable(command);
 
-    if (argv[0] == NULL) {
-        return; // No command entered
+    if (executable == NULL) {
+        printf("minishell: command not found: %s\n", command);
+        return;
     }
 
-    if ((pid = fork()) == 0) { // Child process
-        char *cmd_path;
-
-        // Check if the command is an absolute or relative path
-        if (strchr(argv[0], '/') != NULL) {
-            cmd_path = argv[0];
-        } else {
-            cmd_path = find_executable(argv[0]);
-            if (!cmd_path) {
-                fprintf(stderr, "minishell: command not found: %s\n", argv[0]);
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        if (execve(cmd_path, argv, envp) == -1) {
+    pid_t pid = fork();
+    if (pid == 0) {
+        // Child process
+        if (execve(executable, args, environ) == -1) {
             perror("minishell");
         }
         exit(EXIT_FAILURE);
     } else if (pid < 0) {
-        perror("fork");
+        // Error forking
+        perror("minishell");
     } else {
-        // Parent process waits for the child to complete
-        do {
-            waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+        // Parent process
+        int status;
+        waitpid(pid, &status, 0);
+    }
+
+    // Free the allocated memory for the executable path if it was duplicated
+    if (executable != command) {
+        free(executable);
     }
 }
 
-void parse_input(char *line, char **argv) {
-    int i = 0;
-    argv[i] = strtok(line, " ");
-    while (argv[i] != NULL) {
-        i++;
-        argv[i] = strtok(NULL, " ");
-    }
+void	error_str(void)
+{
+	g_exit_status = 258;
 }
 
 void display_prompt(char **envp) {
     char *input;
-    char *argv[100];
+    char **argv;
 
     load_history();
-
+    *argv = NULL;
     while (1) {
         input = readline("minishell> ");
-        if (!input) {
-            // Handle ctrl-D (EOF)
+        add_history(input);
+        if (!input)
+        {
             printf("\n");
             break;
         }
-
-        if (*input) {
-            add_history(input);
-        }
-
-        parse_input(input, argv);
-        execute_command(argv, envp);
-
+        argv = split_input(input);
+        if(argv[0] != NULL)
+            execute_command(argv);
         free(input);
+        free(argv);
     }
-
     save_history();
 }
 
-int main(int argc, char **argv, char **envp) {
-    (void)argc;
-    (void)argv;
-
-    // Setup signal handlers
+int main(int argc, char **argv, char **envp)
+{
+    g_exit_status = 0;
     setup_signal_handlers();
-
+    if(!argc && !argv)
+        return (0);
     display_prompt(envp);
-    return 0;
+    return (g_exit_status);
 }

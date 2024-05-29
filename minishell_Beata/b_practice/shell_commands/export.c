@@ -6,57 +6,57 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/28 16:39:33 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:56:44 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../minishell.h"
+#include "../minishell.h"
 
-// extern char **environ;
+extern char **environ;
 
-// void shell_export(char *args)
-// {
-//     if (args[1] == NULL) {
-//         // No argument, print all environment variables
-//         for (char **env = environ; *env != 0; env++) {
-//             printf("%s\n", *env);
-//         }
-//     } else {
-//         // Parse the argument
-//         char *name = strtok(args[1], "=");
-//         char *value = strtok(NULL, "=");
+void shell_export(char *args)
+{
+    if (args[1] == NULL) {
+        // No argument, print all environment variables
+        for (char **env = environ; *env != 0; env++) {
+            printf("%s\n", *env);
+        }
+    } else {
+        // Parse the argument
+        char *name = strtok(args[1], "=");
+        char *value = strtok(NULL, "=");
 
-//         if (name && value) {
-//             // Find if the variable already exists
-//             int index = find_env_var(name);
-//             if (index != -1) {
-//                 // Replace existing value
-//                 size_t len = strlen(name) + strlen(value) + 2;
-//                 char *new_env_var = malloc(len);
-//                 snprintf(new_env_var, len, "%s=%s", name, value);
-//                 environ[index] = new_env_var;
-//             } else {
-//                 // Add new environment variable
-//                 size_t len = strlen(name) + strlen(value) + 2;
-//                 char *new_env_var = malloc(len);
-//                 snprintf(new_env_var, len, "%s=%s", name, value);
+        if (name && value) {
+            // Find if the variable already exists
+            int index = find_env_var(name);
+            if (index != -1) {
+                // Replace existing value
+                size_t len = strlen(name) + strlen(value) + 2;
+                char *new_env_var = malloc(len);
+                snprintf(new_env_var, len, "%s=%s", name, value);
+                environ[index] = new_env_var;
+            } else {
+                // Add new environment variable
+                size_t len = strlen(name) + strlen(value) + 2;
+                char *new_env_var = malloc(len);
+                snprintf(new_env_var, len, "%s=%s", name, value);
 
-//                 // Count current environment variables
-//                 int env_count = 0;
-//                 while (environ[env_count] != NULL) {
-//                     env_count++;
-//                 }
+                // Count current environment variables
+                int env_count = 0;
+                while (environ[env_count] != NULL) {
+                    env_count++;
+                }
 
-//                 // Allocate space for the new environment variable
-//                 environ = realloc(environ, (env_count + 2) * sizeof(char *));
-//                 environ[env_count] = new_env_var;
-//                 environ[env_count + 1] = NULL;
-//             }
-//         } else {
-//             fprintf(stderr, "minishell: export: invalid format\n");
-//         }
-//     }
-// }
+                // Allocate space for the new environment variable
+                environ = realloc(environ, (env_count + 2) * sizeof(char *));
+                environ[env_count] = new_env_var;
+                environ[env_count + 1] = NULL;
+            }
+        } else {
+            fprintf(stderr, "minishell: export: invalid format\n");
+        }
+    }
+}
 
 
 

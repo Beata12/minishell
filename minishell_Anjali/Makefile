@@ -6,7 +6,7 @@
 #    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/26 15:14:19 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/05/28 18:02:57 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,25 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 #  CFLAGS += -fsanitize=memory
 
-SRCS =  src/test.c
+SRCS =  src/minishell.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) -lreadline
+	$(CC) $(OBJS) -o $(NAME) -lreadline
+	@echo "${GREEN}✅ $(NAME) Compilation completed successfully! ✅${ENDCOLOR}"
+	
 
 clean:
-	rm -f $(OBJS)
+	@echo "${RED}🧹 Cleaning objects... 🧹${ENDCOLOR}"
+	@rm -f $(OBJS)
+	@echo "${CYAN}✅ Simple clean completed! ✨${ENDCOLOR}"
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "${RED}🧹 Cleaning program... 🧹${ENDCOLOR}"
+	@rm -f $(NAME)
+	@echo "${MAGENTA}✅ Deep clean completed! ✨${ENDCOLOR}"
 
 re: fclean all
 
