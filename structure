@@ -1,4 +1,5 @@
 main.c - could be minishell.c
+
 prompt.c
 
 PARSING
@@ -15,11 +16,17 @@ shell_commands
 	unset.c
 # env.c
 	exit.c
-
 	touch.c
 	mkdir.c
-	history.c
-	controling keebord (ctr-d, crtl-c, ctrl-\)
+#history.c
+
+#controling keebord (ctr-d, crtl-c, ctrl-\)
+#{ Handle ctrl-C: This is handled in our handle_sigint function.
+    Handle ctrl-D: readline returns NULL on EOF (which is triggered by ctrl-D).
+    Handle ctrl-\: This is handled in our handle_sigquit function by doing nothing.
+}
+
+
 	handle semicolens, backslash 
 	handle qutations "" '' !! important
 	handle redaraction
@@ -27,11 +34,10 @@ shell_commands
 	handle $ symbol
 
 header files:
-	minishell.h
+#minishell.h
 	shell_commands.h
 
 	Implement pipes
+#Makefile
 
-Makefile
-
-split function to make parsing work better
+#split function to make parsing work better

@@ -6,7 +6,7 @@
 #    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/28 18:02:57 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/05/29 14:30:00 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,14 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 #  CFLAGS += -fsanitize=memory
 
-SRCS =  src/minishell.c
+SRCS =  src/minishell.c src/util.c \
+		src/shell_commands/echo.c \
+		src/shell_commands/env.c \
+		src/shell_commands/cd.c \
+		src/shell_commands/exit.c \
+		src/shell_commands/pwd.c \
+		src/shell_commands/export.c \
+		src/shell_commands/unset.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
