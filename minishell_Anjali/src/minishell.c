@@ -6,12 +6,13 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:24:44 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:55:30 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int g_exit_status;
 // Signal handlers
 void handle_sigint(int sig)
 {
@@ -121,9 +122,6 @@ int ft_execvp(const char *args, char **argv)
 		return (shell_exit(argv));
 	else if (my_strcmp(args, "pwd") == 0)
 		return (shell_pwd(argv));
-	// else if (my_strcmp(args, "export") == 0)
-	// 	return (shell_export(argv[0]));
-	// 	// return (shell_export(argv));
 	else if (my_strcmp(args, "unset") == 0)
 		{shell_unset(argv);
 		return (0);}
@@ -150,7 +148,7 @@ void execute_command(char **args)
     if (pid == 0)
     {
         // Child process
-        if (ft_execvp(executable, args) == -1)
+        if (ft_execvp(args[0], args) == -1)
         {
             perror("minishell");
         }

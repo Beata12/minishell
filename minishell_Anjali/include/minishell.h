@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:32:34 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:41:31 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 #include <errno.h>
 
 #define HISTORY_FILE ".minishell_history"
-int g_exit_status;
 extern char **environ;
 
 // Function prototypes
