@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/29 16:57:04 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/05/30 12:42:52 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 SRCS =  src/minishell.c \
 		src/util.c \
-		src/parser2.c \
+		src/parsing.c \
+		src/lexical_parser.c \
 		src/shell_commands/echo.c \
 		src/shell_commands/env.c \
 		src/shell_commands/cd.c \
