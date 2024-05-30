@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/30 12:31:27 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:58:01 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,24 @@ void handlePipe(const char **ptr, Token *tokens, int *token_count)
     (*token_count)++;
 }
 
-void handleSpecial(const char **ptr)
+int	check_str(char *input)
 {
-    printf("Ignoring special character: %c\n", **ptr);
-    (*ptr)++;
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '|')
+			return (print_error_msg_pipe(input));
+		else if (input[i] == '&')
+			return (print_error_msg_ampresent(input));
+		else if (input[i] == ')')
+			return (print_error_msg_closing_brace(input));
+		else if (input[i] == ']')
+			return (print_error_msg_closing_square(input));
+		else if (input[i] == '}')
+			return (print_error_msg_closing_curly(input));
+		i++;
+	}
+	return (0);
 }

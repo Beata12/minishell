@@ -3,22 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
+#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/30 12:42:52 by bmarek           ###   ########.fr        #
+#    Updated: 2024/05/30 18:59:18 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
+#CFLAGS = -Wall -Wextra -Werror -Iinclude
 #  CFLAGS += -fsanitize=memory
 
 SRCS =  src/minishell.c \
 		src/util.c \
 		src/parsing.c \
 		src/lexical_parser.c \
+		src\special_characters.c \
 		src/shell_commands/echo.c \
 		src/shell_commands/env.c \
 		src/shell_commands/cd.c \
