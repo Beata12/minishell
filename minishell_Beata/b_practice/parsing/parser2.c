@@ -1,111 +1,208 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 07:43:12 by bmarek            #+#    #+#             */
+/*   Updated: 2024/05/30 12:35:16 by bmarek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef enum e_token_types {
-    T_WORD = 0,     // Word token
-    T_RED_TO,       // Redirection to (>)
-    T_RED_FROM,     // Redirection from (<)
-    T_DLESS,        // Here-document (<<)
-    T_DGREAT,       // Append (>>)
-    T_PIPE,         // Pipe (|)
-    T_QUOTE,        // Quote (single or double)
-    T_ERROR         // Error token
-} t_token_types;
+#include "parsing.h"
 
-// Structure for tokens
-typedef struct {
-    int type;       // Type of the token
-    char value[256];// Value of the token, assuming max length 256 characters
-} Token;
-
+// Simple lexical function (lexer) for tokenizing input
 int lex(const char *input, Token *tokens)
 {
-    int token_count = 0;   // Counter for tokens
-    const char *ptr = input;   // Pointer to traverse the input string
-    int in_quotes = 0; // Flag indicating if currently inside quotes
+    int token_count = 0;
+    const char *ptr = input;
+    int in_quotes = 0;
 
-    while (*ptr != '\0') // Loop until the end of the input string
-    {
-        // Skip whitespace if not inside quotes
+    while (*ptr != '\0')
+	{
         if (!in_quotes && isspace(*ptr))
-        {
+		{
             ptr++;
             continue;
         }
-
-        // Check if inside quotes
-        if (*ptr == '"' || *ptr == '\'')
-        {
-            // Handle quotes
-            printf("%c quote found, processing...\n", *ptr);
-            tokens[token_count].type = T_QUOTE;
-            int len = 0;
-            char quote_char = *ptr++; // Save the quote character and move to the next character
-            in_quotes = 1; // Set the flag indicating we're inside quotes
-            while (*ptr != '\0' && *ptr != quote_char)
-            {
-                tokens[token_count].value[len++] = *ptr++;
-            }
-            if (*ptr == quote_char)
-            {
-                printf("End %c quote found, adding token: \"%s\"\n", quote_char, tokens[token_count].value);
-                ptr++; // Skip the ending quote
-            }
-            else
-            {
-                // Handle unclosed quote
-                fprintf(stderr, "Error: Unclosed %c quote detected\n", quote_char);
-                return 0;
-            }
-            tokens[token_count].value[len] = '\0';
-            token_count++;
-            in_quotes = 0; // Reset the flag indicating we're outside quotes
-            continue;
-        }
-
-        // Handle other cases (words, pipes, etc.)
-        if (*ptr == '|')
-        {
-            // Handle pipe character
-            printf("Pipe found, adding token...\n");
-            tokens[token_count].type = T_PIPE;
-            tokens[token_count].value[0] = *ptr;
-            tokens[token_count].value[1] = '\0';
-            ptr++;
-            token_count++;
-            continue;
-        }
+		else if (*ptr == '\"' || *ptr == '\'')
+            handleQuote(&ptr, tokens, &token_count);
+        else if (*ptr == '|')
+            handlePipe(&ptr, tokens, &token_count);
         else if (*ptr == '\\' || *ptr == ';')
-        {
-            // Ignore backslash and semicolon characters
-            printf("Ignoring special character: %c\n", *ptr);
-            ptr++;
-            continue;
-        }
+            handleSpecial(&ptr);
         else
-        {
-            // Handle words
-            int len = 0;
-            while (*ptr != '\0' && !isspace(*ptr) && *ptr != '|' && *ptr != '"' && *ptr != '\'' && *ptr != '\\' && *ptr != ';' && len < 255)
-            {
-                tokens[token_count].value[len++] = *ptr++;
-            }
-            tokens[token_count].value[len] = '\0';
-            tokens[token_count].type = T_WORD;
-            printf("Processing word: %s\n", tokens[token_count].value);
-            token_count++;
-            continue;
-        }
-
-        // Move to the next character
-        ptr++;
+            handleWord(&ptr, tokens, &token_count);
     }
-
-    return token_count; // Return the number of tokens
+    return token_count;
 }
 
+// Function to print token information
+void print_token_info(Token *tokens, int token_count)
+{
+    int i;
+
+	i = 0;
+    while (i < token_count)
+    { // Loop through tokens
+        printf("Token %d: type: ", i + 1);
+        if (tokens[i].type == T_WORD) { printf("WORD"); } // Print token type
+        else if (tokens[i].type == T_RED_TO) { printf("RED_TO"); }
+        else if (tokens[i].type == T_RED_FROM) { printf("RED_FROM"); }
+        else if (tokens[i].type == T_DLESS) { printf("DLESS"); }
+        else if (tokens[i].type == T_DGREAT) { printf("DGREAT"); }
+        else if (tokens[i].type == T_PIPE) { printf("PIPE"); }
+        else if (tokens[i].type == T_QUOTE) { printf("QUOTE"); }
+        else { printf("ERROR"); }
+        printf(", value: %s\n", tokens[i].value); // Print token value
+        i++; // Increment counter
+    }
+}
+
+// Function to parse the command
+void parser(char *input_command)
+{
+	int i;
+	i = 1;
+    Token tokens[1024];
+    int token_count = lex(input_command, tokens); // Tokenize the input command
+    print_token_info(tokens, token_count); // Print information about tokens
+    if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
+	{
+        // Handle echo command
+        printf("Echoing:");
+        while (i < token_count)
+		{ // Loop through tokens starting from index 1
+			printf(" %s", tokens[i].value); // Print token value
+			i++; // Increment counter
+		}
+        printf("\n");
+    }
+	else// Placeholder for parsing other commands
+        printf("Other command parsing is not implemented yet.\n");
+}
+
+// Main function
+int main(int argc, char **argv) {
+	int i = 1; // Initialize counter
+	if (argc < 2) // Check if there are enough arguments
+	{
+		printf("Usage: %s <command>\n", argv[0]);
+		return 1;
+	}
+	size_t length = 0; // Calculate the total length of the command
+	while (i < argc)
+	{
+		length += strlen(argv[i]) + 1;
+		i++; // Increment counter
+	}
+	char *command = malloc(length); // Allocate memory for the command
+	if (!command) // Check if memory allocation was successful
+	{
+		perror("malloc");
+		return 1;
+	}
+	command[0] = '\0'; // Initialize the command string
+	i = 1; // Reset counter
+	while (i < argc)
+	{ // Concatenate the command line arguments into a single string
+		strcat(command, argv[i]);
+		if (i < argc - 1)
+			strcat(command, " ");
+		i++; // Increment counter
+	}
+
+	parser(command); // Parse the command
+	free(command); // Free the allocated memory
+	return 0;
+}
+
+// int lex(const char *input, Token *tokens)
+// {
+//     int token_count = 0;   // Counter for tokens
+//     const char *ptr = input;   // Pointer to traverse the input string
+//     int in_quotes = 0; // Flag indicating if currently inside quotes
+
+//     while (*ptr != '\0') // Loop until the end of the input string
+//     {
+//         // Skip whitespace if not inside quotes
+//         if (!in_quotes && isspace(*ptr))
+//         {
+//             ptr++;
+//             continue;
+//         }
+
+//         // Check if inside quotes
+//         if (*ptr == '\"' || *ptr == '\'')
+//         {
+//             // Handle quotes
+//             printf("%c quote found, processing...\n", *ptr);
+//             tokens[token_count].type = T_QUOTE;
+//             int len = 0;
+//             char quote_char = *ptr++; // Save the quote character and move to the next character
+//             in_quotes = 1; // Set the flag indicating we're inside quotes
+//             while (*ptr != '\0' && *ptr != quote_char)
+//             {
+//                 tokens[token_count].value[len++] = *ptr++;
+//             }
+//             if (*ptr == quote_char)
+//             {
+//                 printf("End %c quote found, adding token: \"%s\"\n", quote_char, tokens[token_count].value);
+//                 ptr++; // Skip the ending quote
+//             }
+//             else
+//             {
+//                 // Handle unclosed quote
+//                 fprintf(stderr, "Error: Unclosed %c quote detected\n", quote_char);
+//                 return 0;
+//             }
+//             tokens[token_count].value[len] = '\0';
+//             token_count++;
+//             in_quotes = 0; // Reset the flag indicating we're outside quotes
+//             continue;
+//         }
+
+//         // Handle other cases (words, pipes, etc.)
+//         if (*ptr == '|')
+//         {
+//             // Handle pipe character
+//             printf("Pipe found, adding token...\n");
+//             tokens[token_count].type = T_PIPE;
+//             tokens[token_count].value[0] = *ptr;
+//             tokens[token_count].value[1] = '\0';
+//             ptr++;
+//             token_count++;
+//             continue;
+//         }
+//         else if (*ptr == '\\' || *ptr == ';')
+//         {
+//             // Ignore backslash and semicolon characters
+//             printf("Ignoring special character: %c\n", *ptr);
+//             ptr++;
+//             continue;
+//         }
+//         else
+//         {
+//             // Handle words
+//             int len = 0;
+//             while (*ptr != '\0' && !isspace(*ptr) && *ptr != '|' && *ptr != '"' && *ptr != '\'' && *ptr != '\\' && *ptr != ';' && len < 255)
+//             {
+//                 tokens[token_count].value[len++] = *ptr++;
+//             }
+//             tokens[token_count].value[len] = '\0';
+//             tokens[token_count].type = T_WORD;
+//             printf("Processing word: %s\n", tokens[token_count].value);
+//             token_count++;
+//             continue;
+//         }
+
+//         // Move to the next character
+//         ptr++;
+//     }
+
+//     return token_count; // Return the number of tokens
+// }
 
 // Simple lexical function (lexer) for tokenizing input
 // int lex(const char *input, Token *tokens)
@@ -207,85 +304,6 @@ int lex(const char *input, Token *tokens)
 //     return token_count; // Return the number of tokens
 // }
 
-// Function to print token information
-void print_token_info(Token *tokens, int token_count)
-{
-    int i;
-
-	i = 0;
-    while (i < token_count)
-    { // Loop through tokens
-        printf("Token %d: type: ", i + 1);
-        if (tokens[i].type == T_WORD) { printf("WORD"); } // Print token type
-        else if (tokens[i].type == T_RED_TO) { printf("RED_TO"); }
-        else if (tokens[i].type == T_RED_FROM) { printf("RED_FROM"); }
-        else if (tokens[i].type == T_DLESS) { printf("DLESS"); }
-        else if (tokens[i].type == T_DGREAT) { printf("DGREAT"); }
-        else if (tokens[i].type == T_PIPE) { printf("PIPE"); }
-        else if (tokens[i].type == T_QUOTE) { printf("QUOTE"); }
-        else { printf("ERROR"); }
-        printf(", value: %s\n", tokens[i].value); // Print token value
-        i++; // Increment counter
-    }
-}
-
-// Function to parse the command
-void parser(char *input_command)
-{
-	int i;
-	i = 1;
-    Token tokens[1024];
-    int token_count = lex(input_command, tokens); // Tokenize the input command
-    print_token_info(tokens, token_count); // Print information about tokens
-    if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
-	{
-        // Handle echo command
-        printf("Echoing:");
-        while (i < token_count)
-		{ // Loop through tokens starting from index 1
-			printf(" %s", tokens[i].value); // Print token value
-			i++; // Increment counter
-		}
-        printf("\n");
-    }
-	else// Placeholder for parsing other commands
-        printf("Other command parsing is not implemented yet.\n");
-}
-
-// Main function
-int main(int argc, char **argv) {
-	int i = 1; // Initialize counter
-	if (argc < 2) // Check if there are enough arguments
-	{
-		printf("Usage: %s <command>\n", argv[0]);
-		return 1;
-	}
-	size_t length = 0; // Calculate the total length of the command
-	while (i < argc)
-	{
-		length += strlen(argv[i]) + 1;
-		i++; // Increment counter
-	}
-	char *command = malloc(length); // Allocate memory for the command
-	if (!command) // Check if memory allocation was successful
-	{
-		perror("malloc");
-		return 1;
-	}
-	command[0] = '\0'; // Initialize the command string
-	i = 1; // Reset counter
-	while (i < argc)
-	{ // Concatenate the command line arguments into a single string
-		strcat(command, argv[i]);
-		if (i < argc - 1)
-			strcat(command, " ");
-		i++; // Increment counter
-	}
-
-	parser(command); // Parse the command
-	free(command); // Free the allocated memory
-	return 0;
-}
 
 
 //PRINTING LETTER BY LETTER
