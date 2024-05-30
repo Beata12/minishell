@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 17:50:49 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:54:15 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ void display_prompt(void)
 {
     char *input;
 
-
     load_history();
     while (1) {
         input = readline("minishell> ");
@@ -188,7 +187,13 @@ void display_prompt(void)
         if (*input) {
             add_history(input);
         }
-        parser(input);
+        if (check_str(input) != 0)
+        {
+            error_str();
+            free(input);
+        }   
+        else
+            parser(input);
         free(input);
     }
     save_history();

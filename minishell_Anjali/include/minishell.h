@@ -6,10 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 16:58:26 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:05:49 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _POSIX_C_SOURCE 200809L
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -32,14 +33,17 @@ extern char **environ;
 
 // Function prototypes
 void display_prompt(void);
+size_t	ft_strlen(const char *s);
 void setup_signal_handlers(void);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
 char **split_input(char *input);
 void execute_command(char **args);
+int ft_execvp(const char *args, char **argv);
 //void execute_command(char **args);
 int ft_newline(char **av);
 void execute_command(char **args);
+int	check_str(char *input);
 void load_history();
 void save_history();
 
