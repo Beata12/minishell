@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 17:50:49 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/30 08:48:42 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ void error_str(void)
 void display_prompt(void)
 {
     char *input;
-
 
     load_history();
     while (1) {
