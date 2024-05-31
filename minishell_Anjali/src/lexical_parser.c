@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/31 12:32:11 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/31 13:07:51 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void handleWord(const char **ptr, Token *tokens, int *token_count)
     value[len] = '\0';
     strcpy(tokens[*token_count].value, value);
     tokens[*token_count].type = T_WORD;
-    printf("Processing word: %s\n", tokens[*token_count].value);
+    //printf("Processing word: %s\n", tokens[*token_count].value);
     (*token_count)++;
 }
 
 void handleQuote(const char **ptr, Token *tokens, int *token_count)
 {
-    printf("%c quote found, processing...\n", **ptr);
+   // printf("%c quote found, processing...\n", **ptr);
     tokens[*token_count].type = T_QUOTE;
     int len = 0;
     char quote_char = **ptr;
@@ -46,7 +46,7 @@ void handleQuote(const char **ptr, Token *tokens, int *token_count)
     }
     if (**ptr == quote_char)
 	{
-        printf("End %c quote found, adding token: \"%s\"\n", quote_char, tokens[*token_count].value);
+       // printf("End %c quote found, adding token: \"%s\"\n", quote_char, tokens[*token_count].value);
         (*ptr)++;
     }
 	else
@@ -88,4 +88,10 @@ int	check_str(char *input)
 		i++;
 	}
 	return (0);
+}
+
+void handleSpecial(const char **ptr)
+{
+    printf("Ignoring special character: %c\n", **ptr);
+    (*ptr)++;
 }
