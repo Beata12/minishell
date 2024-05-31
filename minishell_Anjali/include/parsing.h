@@ -6,7 +6,7 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/30 12:36:38 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:40:39 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	handleWord(const char **ptr, Token *tokens, int *token_count);
 void	handleQuote(const char **ptr, Token *tokens, int *token_count);
 void	handlePipe(const char **ptr, Token *tokens, int *token_count);
 void	handleSpecial(const char **ptr);
+int 	lex(const char *input, Token *tokens);
+
 
 #endif
 
