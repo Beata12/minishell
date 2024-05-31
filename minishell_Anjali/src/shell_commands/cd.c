@@ -6,15 +6,12 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:35 by bmarek            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/31 12:21:53 by bmarek           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/31 12:27:39 by aneekhra         ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Updated: 2024/05/31 12:35:24 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/parsing.h"
 
 int shell_cd(char **args)
 {

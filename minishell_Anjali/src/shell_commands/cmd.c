@@ -6,20 +6,12 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:48:22 by aneekhra          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/31 12:22:08 by bmarek           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/31 12:27:45 by aneekhra         ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Updated: 2024/05/31 12:35:19 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-<<<<<<< HEAD
 #include "../../include/parsing.h"
-=======
-#include "../include/parsing.h"
->>>>>>> refs/remotes/origin/main
 
 void	execute_command(Token *tokens, int token_count)
 {

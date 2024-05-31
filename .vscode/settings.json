@@ -5,6 +5,7 @@
 		"shell_commands.h": "c",
 		"dirent.h": "c",
 		"readline.h": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"parsing.h": "c"
 	}
 }
