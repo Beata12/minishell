@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
 /*   Updated: 2024/05/31 12:21:28 by bmarek           ###   ########.fr       */
+=======
+/*   Created: 2024/05/31 12:07:36 by aneekhra          #+#    #+#             */
+/*   Updated: 2024/05/31 12:26:47 by aneekhra         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +21,7 @@ int shell_echo(char **args)
 {
     int i = 1;
     int newline = 1;
-    if (args[1] && strcmp(args[1], "-n") == 0)
+    if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
         newline = 0;
         i++;
