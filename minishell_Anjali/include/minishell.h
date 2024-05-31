@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/30 19:05:49 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:24:02 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int	check_str(char *input);
 void load_history();
 void save_history();
 
+int	ft_strcmp(char *str, char *in);
+char	*ft_strnstr(char *haystack, char *needle, size_t len);
+size_t	ft_strlen(const char *s);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr_minus_fd(char *s, int len, int fd);
 
 int		my_strcmp(const char *s1, const char *s2);
 int		shell_cd(char **args);
@@ -58,4 +63,11 @@ int		shell_pwd(char **argv);
 void	shell_unset(char **args);
 int ft_newline(char **av);
 void parser(char *input_command);
+int	check_str(char *input);
+int	print_error_msg_pipe(char *str);
+int	print_error_msg_ampresent(char *str);
+int	print_error_msg_closing_brace(char *str);
+int	print_error_msg_closing_square(char *str);
+int	print_error_msg_closing_curly(char *str);
+
 #endif

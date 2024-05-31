@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/30 18:59:18 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/05/31 12:20:41 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS =  src/minishell.c \
 		src/util.c \
 		src/parsing.c \
 		src/lexical_parser.c \
-		src\special_characters.c \
+		src/special_char.c \
 		src/shell_commands/echo.c \
 		src/shell_commands/env.c \
 		src/shell_commands/cd.c \

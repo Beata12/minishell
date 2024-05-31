@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:48:22 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:30:38 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:22:08 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include "../../include/parsing.h"
 
 void	execute_command(Token *tokens, int token_count)
 {
