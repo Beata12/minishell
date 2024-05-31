@@ -23,7 +23,7 @@ shell_commands
 
 
 	handle semicolens, backslash 
-	handle qutations "" '' !! important
+	handle qutations "" '' !! important - almost done
 	handle redaraction
 	Handle $?
 	handle $ symbol
