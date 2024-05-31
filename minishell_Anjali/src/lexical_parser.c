@@ -6,11 +6,12 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/30 18:58:01 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:55:42 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../include/minishell.h"
+#include "../include/parsing.h"
 
 void handleWord(const char **ptr, Token *tokens, int *token_count)
 {

@@ -6,11 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/29 14:41:24 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:27:39 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int shell_cd(char **args)
 {
