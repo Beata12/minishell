@@ -39,5 +39,3 @@ Minishell is a project which is creating a simple shell in C, reproducing the be
 - export without options
 - env without options or arguments
 - exit without options
-
-INSTALLED WSL
