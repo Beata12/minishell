@@ -32,7 +32,7 @@ int lex(const char *input, Token *tokens)
         else if (*ptr == '|')
             handlePipe(&ptr, tokens, &token_count);
         else if (*ptr == '\\' || *ptr == ';')
-            handleSpecial(&ptr);
+            handleSpecial(&ptr);2232
         else
             handleWord(&ptr, tokens, &token_count);
     }
