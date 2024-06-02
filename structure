@@ -1,23 +1,27 @@
-main.c - could be minishell.c
+# main program - minishell.c
 
-prompt.c
+# prompt.c
 
-PARSING
+# PARSING
 parser.c
 
-EXECUTION
+# EXECUTION
 executor.c
 
-shell_commands
-# echo.c
-# cd.c
-# pwd.c
-	export.c
-	unset.c
-# env.c
-	exit.c
-	touch.c
-	mkdir.c
+# shell_commands
+## zrobione
+- echo.c 
+- cd.c
+- pwd.c
+- env.c
+
+## do zrobienia
+- export.c
+- unset.c
+- exit.c
+- touch.c
+- mkdir.c
+
 #history.cour handle_sigquit function by doing nothing.
 }
 
