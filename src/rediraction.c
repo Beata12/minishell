@@ -6,7 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:01:18 by bmarek            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/03 19:27:31 by aneekhra         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/03 19:19:49 by bmarek           ###   ########.fr       */
+>>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +30,13 @@ void	handle_heredoc(const char *delimiter)
 	while (1)
 	{
 		printf("> ");
+<<<<<<< HEAD
 		get_next_line(fd);
 		if (strncmp(line, delimiter, strlen(delimiter)) == 0
+=======
+		getline(&line, &len, stdin);
+		if (strncmp( line, delimiter, strlen(delimiter)) == 0
+>>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
 			&& line[strlen(delimiter)] == '\n')
 		{
 			break;

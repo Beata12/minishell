@@ -6,24 +6,21 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:42 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:48:20 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 20:55:30 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/parsing.h"
 
-int shell_exit(char **args)
+int shell_exit(Token *args)
 {
-	(void)args;
-	// Free memory allocated for each argument
-	printf("\n");
-	// Terminate the program
-	exit(EXIT_SUCCESS);
+    // Free memory allocated for each argument
+    if (args != NULL) {
+        for (int i = 0; args[i].value2 != NULL; i++) {
+            free(args[i].value2);
+        }
+        //free(args);
+    }
+    exit(0);
 }
-
-// int main()
-// {
-//	 shell_exit();
-//		 printf("This line will never be reached\n");
-//	 return (0);
-// }

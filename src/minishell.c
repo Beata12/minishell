@@ -6,7 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/03 19:06:56 by aneekhra         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/03 20:42:53 by bmarek           ###   ########.fr       */
+>>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +123,7 @@ int ft_execvp(const char *args, char **argv)
 	else if (my_strcmp(args, "cd") == 0)
 		return (shell_cd(argv));
 	else if (my_strcmp(args, "exit") == 0)
-		return (shell_exit(argv));
+		return (0);
 	else if (my_strcmp(args, "pwd") == 0)
 		return (shell_pwd(argv));
 	else if (my_strcmp(args, "unset") == 0)

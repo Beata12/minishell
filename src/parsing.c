@@ -6,7 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:43:12 by bmarek            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/03 21:00:06 by aneekhra         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/03 20:54:28 by bmarek           ###   ########.fr       */
+>>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +76,7 @@ void parser(char *input_command)
 	//ft_execvp(tokens[0].value, tokens); // Execute the command
 	handle_redirection(input_command); // Obsługa przekierowań
 	// ft_execvp(input_command, tokens[i].value);
+	
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
 	{
 		// Handle echo command
@@ -83,6 +88,8 @@ void parser(char *input_command)
 		}
 		printf("\n");
 	}
+	else if(token_count > 0 && strcmp(tokens[0].value, "exit") == 0)
+		shell_exit(tokens);
 	else// Placeholder for parsing other commands
 		return;
 		// printf("Other command parsing is not implemented yet.\n");
