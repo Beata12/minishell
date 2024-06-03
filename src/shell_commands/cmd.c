@@ -6,7 +6,7 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:48:22 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/31 12:35:19 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:48:55 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_command(Token *tokens, int token_count)
 	char	*args[64];
 	int		arg_count;
 	int		i;
-    int    pid_cd, pid_env, pid_echo, pid_pwd, pid_export, pid_unset;
+	int		pid_cd, pid_env, pid_echo, pid_pwd, pid_export, pid_unset;
 	
 	arg_count = 0;
 	i = 0;
