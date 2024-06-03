@@ -22,6 +22,8 @@ executor.c
 - touch.c
 - mkdir.c
 
+- clear
+
 ## redirection on good tract
 
 

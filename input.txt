@@ -1,7 +1,11 @@
-hey 
-you
-there
-this 
-is still
-under 
-development
+Other command parsing is not implemented yet.
+[?2004hminishell> 
+[?2004lOther command parsing is not implemented yet.
+[?2004hminishell> 
+[?2004lOther command parsing is not implemented yet.
+[?2004hminishell> 
+minishell> 
+minishell> 
+minishell> 
+minishell> [?2004l
+exit
