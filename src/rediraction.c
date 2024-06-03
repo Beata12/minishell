@@ -6,42 +6,11 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:01:18 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:37:34 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:56:52 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	handle_heredoc(const char *delimiter)
-{
-	char	*line = NULL;
-	size_t	len = 0;
-	FILE	*tmp_file = tmpfile();
-
-	if (!tmp_file) {
-		perror("tmpfile");
-		exit(EXIT_FAILURE);
-	}
-	while (1)
-	{
-		printf("> ");
-		getline(&line, &len, stdin);
-		if (strncmp(line, delimiter, strlen(delimiter)) == 0
-			&& line[strlen(delimiter)] == '\n')
-		{
-			break;
-		}
-		fprintf(tmp_file, "%s", line);
-	}
-	fseek(tmp_file, 0, SEEK_SET);
-	if (dup2(fileno(tmp_file), STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	free(line);
-	fclose(tmp_file);
-}
 
 // void	handle_redirection(char *input)
 // {
@@ -85,6 +54,38 @@ void	handle_heredoc(const char *delimiter)
 // 		input = token + strlen(filename) + 1;
 // 	}
 // }
+
+void	handle_heredoc(const char *delimiter)
+{
+	char	*line = NULL;
+	size_t	len = 0;
+	FILE	*tmp_file = tmpfile();
+
+	if (!tmp_file) {
+		perror("tmpfile");
+		exit(EXIT_FAILURE);
+	}
+	while (1)
+	{
+		printf("> ");
+		getline(&line, &len, stdin);
+		if (strncmp( line, delimiter, strlen(delimiter)) == 0
+			&& line[strlen(delimiter)] == '\n')
+		{
+			break;
+		}
+		fprintf(tmp_file, "%s", line);
+	}
+	fseek(tmp_file, 0, SEEK_SET);
+	if (dup2(fileno(tmp_file), STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	free(line);
+	fclose(tmp_file);
+}
+
 
 int redirect_input(const char *filename)
 {       
