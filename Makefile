@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
+#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/03 10:08:39 by bmarek           ###   ########.fr        #
+#    Updated: 2024/06/03 19:01:02 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,22 @@ SRCS =  src/minishell.c \
 		src/shell_commands/pwd.c \
 		src/shell_commands/unset.c
 #src/shell_commands/export.c
+
+LIBFTFOLDER = Libft
+
+LIBFT = $(LIBFTFOLDER)/libft.a
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -lreadline
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "${GREEN}✅ $(NAME) Compilation completed successfully! ✅${ENDCOLOR}"
 	
+$(LIBFT):
+	@make -C $(LIBFTFOLDER) --silent
+		clear
 
 clean:
 	@echo "${RED}🧹 Cleaning objects... 🧹${ENDCOLOR}"

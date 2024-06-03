@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 11:15:25 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 19:06:56 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,11 +187,11 @@ void display_prompt(void)
 	load_history();
 
 	// Register SIGINT handler
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	
-//	 while (1) {
-	while (!sigint_received)
-	{
+	 while (1) {
+	// while (!sigint_received)
+	// {
 		input = readline("minishell> ");
 		if (!input)
 		{
@@ -215,6 +215,7 @@ int main(int argc, char **argv)
 	if (!argc && !argv)
 		return (0);
 	g_exit_status = 0;
+	ft_printf("Welcome to minishell!\n");
 	setup_signal_handlers();
 	display_prompt();
 	return g_exit_status;

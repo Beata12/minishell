@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:47:31 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:45:25 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ void handlePipe(const char **ptr, Token *tokens, int *token_count)
 	(*ptr)++;
 	(*token_count)++;
 }
+void handleSpecial(const char **ptr)
+{
+	printf("Ignoring special character: %c\n", **ptr);
+	(*ptr)++;
+}
 
 int	check_str(char *input)
 {
@@ -130,10 +135,4 @@ int	check_str(char *input)
 		i++;
 	}
 	return (0);
-}
-
-void handleSpecial(const char **ptr)
-{
-	printf("Ignoring special character: %c\n", **ptr);
-	(*ptr)++;
 }

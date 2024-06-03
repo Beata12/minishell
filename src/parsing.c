@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:43:12 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:46:13 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 21:00:06 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void parser(char *input_command)
 		printf("\n");
 	}
 	else// Placeholder for parsing other commands
-		printf("Other command parsing is not implemented yet.\n");
+		return;
+		// printf("Other command parsing is not implemented yet.\n");
 }
 
 // void parser(char *input_command)

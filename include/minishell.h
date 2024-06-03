@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 10:08:11 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 19:06:19 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>
+#include "../Libft/libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
