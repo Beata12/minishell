@@ -1,14 +1,7 @@
-Other command parsing is not implemented yet.
-[?2004hminishell> fmk d sf
-[?2004lOther command parsing is not implemented yet.
-[?2004hminishell> klsf asdlik a
-[?2004lOther command parsing is not implemented yet.
-[?2004hminishell>  askfnl liknfda
-[?2004lOther command parsing is not implemented yet.
-[?2004hminishell> nalkf asdklifna
-[?2004lOther command parsing is not implemented yet.
-[?2004hminishell> asklasf sf
-[?2004lOther command parsing is not implemented yet.
-[?2004hminishell> a
-minishell> [?2004l
-exit
+hey 
+you
+there
+this 
+is still
+under 
+development

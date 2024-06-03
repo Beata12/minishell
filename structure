@@ -9,18 +9,21 @@ parser.c
 executor.c
 
 # shell_commands
-## zrobione
+## done?
 - echo.c 
 - cd.c
 - pwd.c
 - env.c
 
-## do zrobienia
+## to do
 - export.c
 - unset.c
 - exit.c
 - touch.c
 - mkdir.c
+
+## redirection on good tract
+
 
 #history.cour handle_sigquit function by doing nothing.
 }
