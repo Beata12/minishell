@@ -6,7 +6,7 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/31 12:36:20 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 10:08:11 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,7 @@ int	print_error_msg_closing_curly(char *str);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 int	ft_strcmp(char *str, char *in);
+
+void handle_redirection(char *input);
+
 #endif

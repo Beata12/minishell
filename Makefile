@@ -6,7 +6,7 @@
 #    By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/05/31 12:32:31 by bmarek           ###   ########.fr        #
+#    Updated: 2024/06/03 10:08:39 by bmarek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS =  src/minishell.c \
 		src/util.c \
 		src/parsing.c \
 		src/lexical_parser.c \
+		src/rediraction.c \
 		src/special_char.c \
 		src/shell_commands/echo.c \
 		src/shell_commands/env.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
-/*   Updated: 2024/05/31 13:07:51 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:29:04 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,48 @@ void handleWord(const char **ptr, Token *tokens, int *token_count)
     //printf("Processing word: %s\n", tokens[*token_count].value);
     (*token_count)++;
 }
+// void handleWord(const char **ptr, Token *tokens, int *token_count)
+// {
+//     const int INITIAL_BUFFER_SIZE = 256; // Start with an initial buffer size
+//     int buffer_size = INITIAL_BUFFER_SIZE;
+//     char *value2 = (char *)malloc(buffer_size * sizeof(char));
+//     if (value2 == NULL) {
+//         fprintf(stderr, "Error: Memory allocation failed\n");
+//         return;
+//     }
+//     int len = 0;
+
+//     while (**ptr != '\0' && !isspace(**ptr) && **ptr != '|' && **ptr != '"'
+//            && **ptr != '\'' && **ptr != '\\' && **ptr != ';')
+//     {
+//         if (len >= buffer_size - 1) {
+//             buffer_size *= 2; // Double the buffer size
+//             char *new_value2 = (char *)realloc(value2, buffer_size * sizeof(char));
+//             if (new_value2 == NULL) {
+//                 free(value2);
+//                 fprintf(stderr, "Error: Memory reallocation failed\n");
+//                 return;
+//             }
+//             value2 = new_value2;
+//         }
+//         value2[len++] = **ptr;
+//         (*ptr)++;
+//     }
+//     value2[len] = '\0';
+
+//     // Allocate memory for the token value2 and copy the string
+//     tokens[*token_count].value2 = (char *)malloc((len + 1) * sizeof(char));
+//     if (tokens[*token_count].value2 == NULL) {
+//         free(value2);
+//         fprintf(stderr, "Error: Memory allocation failed for token value2\n");
+//         return;
+//     }
+//     strcpy(tokens[*token_count].value2, value2);
+//     tokens[*token_count].type = T_WORD;
+
+//     free(value2);  // Free the intermediate buffer
+//     (*token_count)++;
+// }
 
 void handleQuote(const char **ptr, Token *tokens, int *token_count)
 {

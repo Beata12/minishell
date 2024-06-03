@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/05/30 18:54:15 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/03 10:56:30 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,12 +173,24 @@ void error_str(void)
     g_exit_status = 258;
 }
 
+volatile sig_atomic_t sigint_received = 0;
+
+// Signal handler function for SIGINT (Ctrl+C)
+void sigint_handler(int signum) {
+    sigint_received = 1;
+}
+
 void display_prompt(void)
 {
     char *input;
 
     load_history();
-    while (1) {
+
+    // Register SIGINT handler
+    signal(SIGINT, sigint_handler);
+	
+//     while (1) {
+    while (!sigint_received) {
         input = readline("minishell> ");
         if (!input) {
             printf("exit\n");
@@ -190,10 +202,12 @@ void display_prompt(void)
         if (check_str(input) != 0)
         {
             error_str();
-            free(input);
         }   
         else
+        {
+            // handle_redirection(input);
             parser(input);
+        }
         free(input);
     }
     save_history();
