@@ -6,7 +6,7 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:47:43 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 10:08:11 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 20:41:10 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include<sys/param.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "parsing.h"
 
 #define HISTORY_FILE ".minishell_history"
 extern char **environ;
@@ -57,7 +58,7 @@ int		my_strcmp(const char *s1, const char *s2);
 int		shell_cd(char **args);
 int		shell_echo(char **args);
 int		shell_env(char **env);
-int		shell_exit(char **args);
+int shell_exit(Token *args);
 void		shell_export(char *arg);
 int		shell_pwd(char **argv);
 void	shell_unset(char **args);

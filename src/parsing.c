@@ -6,7 +6,7 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:43:12 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:46:13 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 20:54:28 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void parser(char *input_command)
 	//ft_execvp(tokens[0].value, tokens); // Execute the command
 	handle_redirection(input_command); // Obsługa przekierowań
 	// ft_execvp(input_command, tokens[i].value);
+	
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
 	{
 		// Handle echo command
@@ -83,6 +84,8 @@ void parser(char *input_command)
 		}
 		printf("\n");
 	}
+	else if(token_count > 0 && strcmp(tokens[0].value, "exit") == 0)
+		shell_exit(tokens);
 	else// Placeholder for parsing other commands
 		printf("Other command parsing is not implemented yet.\n");
 }
