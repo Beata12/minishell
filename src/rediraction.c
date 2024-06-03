@@ -6,54 +6,11 @@
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:01:18 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 16:56:52 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/03 19:19:49 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// void	handle_redirection(char *input)
-// {
-// 	char	*token;
-// 	char	*filename;
-// 	int		append = 0;
-
-// 	while ((token = strpbrk(input, "<>")))
-// 	{
-// 		if (*token == '<')
-// 		{
-// 			if (*(token + 1) == '<')
-// 			{// handle heredoc
-// 				*token = '\0';
-// 				filename = strtok(token + 2, " ");
-// 				handle_heredoc(filename);
-// 			}
-// 			else
-// 			{// handle input redirection
-// 				*token = '\0';
-// 				filename = strtok(token + 1, " ");
-// 				redirect_input(filename);
-// 			}
-// 		}
-// 		else if (*token == '>')
-// 		{
-// 			if (*(token + 1) == '>')
-// 			{// handle output append redirection
-// 				append = 1;
-// 				*token = '\0';
-// 				filename = strtok(token + 2, " ");
-// 			}
-// 			else
-// 			{// handle output redirection
-// 				append = 0;
-// 				*token = '\0';
-// 				filename = strtok(token + 1, " ");
-// 			}
-// 			redirect_output(filename, append);
-// 		}
-// 		input = token + strlen(filename) + 1;
-// 	}
-// }
 
 void	handle_heredoc(const char *delimiter)
 {
@@ -174,3 +131,46 @@ void handle_redirection(char *input)
         input = token + strlen(filename) + 1;
     }
 }
+
+// void	handle_redirection(char *input)
+// {
+// 	char	*token;
+// 	char	*filename;
+// 	int		append = 0;
+
+// 	while ((token = strpbrk(input, "<>")))
+// 	{
+// 		if (*token == '<')
+// 		{
+// 			if (*(token + 1) == '<')
+// 			{// handle heredoc
+// 				*token = '\0';
+// 				filename = strtok(token + 2, " ");
+// 				handle_heredoc(filename);
+// 			}
+// 			else
+// 			{// handle input redirection
+// 				*token = '\0';
+// 				filename = strtok(token + 1, " ");
+// 				redirect_input(filename);
+// 			}
+// 		}
+// 		else if (*token == '>')
+// 		{
+// 			if (*(token + 1) == '>')
+// 			{// handle output append redirection
+// 				append = 1;
+// 				*token = '\0';
+// 				filename = strtok(token + 2, " ");
+// 			}
+// 			else
+// 			{// handle output redirection
+// 				append = 0;
+// 				*token = '\0';
+// 				filename = strtok(token + 1, " ");
+// 			}
+// 			redirect_output(filename, append);
+// 		}
+// 		input = token + strlen(filename) + 1;
+// 	}
+// }
