@@ -5,16 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 17:47:33 by aneekhra          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/03 19:06:56 by aneekhra         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/03 20:42:53 by bmarek           ###   ########.fr       */
->>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
+/*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
+/*   Updated: 2024/06/03 22:05:51 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include "../include/parsing.h"
 
 int g_exit_status;
 // Signal handlers
@@ -114,63 +111,63 @@ int ft_newline(char **av)
 	printf("\n");
 	return (0);
 }
-int ft_execvp(const char *args, char **argv)
-{
-	if (my_strcmp(args, "echo") == 0)
-		return (shell_echo(argv));
-	else if (my_strcmp(args, "env") == 0)
-		return (shell_env(argv));
-	else if (my_strcmp(args, "cd") == 0)
-		return (shell_cd(argv));
-	else if (my_strcmp(args, "exit") == 0)
-		return (0);
-	else if (my_strcmp(args, "pwd") == 0)
-		return (shell_pwd(argv));
-	else if (my_strcmp(args, "unset") == 0)
-		{shell_unset(argv);
-		return (0);}
-	else if (my_strcmp(args, "\n") == 0)
-		return ft_newline(argv);
-	else
-		printf("command not found\n");
-	return (0);
-}
+// int ft_execvp(const char *args, char **argv)
+// {
+// 	if (my_strcmp(args, "e") == 0)
+// 		return ;
+// 	// else if (my_strcmp(args, "env") == 0)
+// 	// 	return (shell_env(argv));
+// 	// else if (my_strcmp(args, "cd") == 0)
+// 	// 	return (shell_cd(argv));
+// 	// else if (my_strcmp(args, "exit") == 0)
+// 	// 	return (0);
+// 	// else if (my_strcmp(args, "pwd") == 0)
+// 	// 	return (shell_pwd(argv));
+// 	// else if (my_strcmp(args, "unset") == 0)
+// 	// 	{shell_unset(argv);
+// 	// 	return (0);}
+// 	// else if (my_strcmp(args, "\n") == 0)
+// 	// 	return ft_newline(argv);
+// 	else
+// 		printf("command not found\n");
+// 	return (0);
+// }
 
-// Function to execute a command
-void execute_command(char **args)
-{
-	char *command = args[0];
-	char *executable = find_executable(command);
+// // Function to execute a command
+// void execute_command(char **args)
+// {
+// 	char *command = args[0];
+// 	char *executable = find_executable(command);
 
-	if (executable == NULL)
-	{
-		printf("minishell: command not found: %s\n", command);
-		return;
-	}
+// 	if (executable == NULL)
+// 	{
+// 		printf("minishell: command not found: %s\n", command);
+// 		return;
+// 	}
 
-	pid_t pid = fork();
-	if (pid == 0)
-	{
-		// Child process
-		if (ft_execvp(args[0], args) == -1)
-		{
-			perror("minishell");
-		}
-		exit(EXIT_FAILURE);
-	} else if (pid < 0)
-	{
-		// Error forking
-		perror("minishell");
-	}
-	else
-	{
-		// Parent process
-		int status;
-		waitpid(pid, &status, 0);
-	}
-	// Free the allocated memory for the executable path if it was duplicated
-	free(executable);
-}
+// 	pid_t pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		// Child process
+// 		if (ft_execvp(args[0], args) == -1)
+// 		{
+// 			perror("minishell");
+// 		}
+// 		exit(EXIT_FAILURE);
+// 	} else if (pid < 0)
+// 	{
+// 		// Error forking
+// 		perror("minishell");
+// 	}
+// 	else
+// 	{
+// 		// Parent process
+// 		int status;
+// 		waitpid(pid, &status, 0);
+// 	}
+// 	// Free the allocated memory for the executable path if it was duplicated
+// 	free(executable);
+// }
 
 void error_str(void)
 {

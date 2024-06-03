@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 07:43:12 by bmarek            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/03 21:00:06 by aneekhra         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/03 20:54:28 by bmarek           ###   ########.fr       */
->>>>>>> 74bd4345c924ae628bd81f07a545493637d8194f
+/*   Created: 2024/06/03 21:09:26 by aneekhra          #+#    #+#             */
+/*   Updated: 2024/06/03 22:15:28 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +75,28 @@ void parser(char *input_command)
 	
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
 	{
+		shell_echo(tokens);
 		// Handle echo command
 		//printf("Echoing:");
-		while (i < token_count)
-		{ // Loop through tokens starting from index 1
-			printf(" %s", tokens[i].value); // Print token value
-			i++; // Increment counter
-		}
-		printf("\n");
+		// while (i < token_count)
+		// { // Loop through tokens starting from index 1
+		// 	printf(" %s", tokens[i].value); // Print token value
+		// 	i++; // Increment counter
+		// }
+		// printf("\n");
 	}
 	else if(token_count > 0 && strcmp(tokens[0].value, "exit") == 0)
 		shell_exit(tokens);
+	else if(token_count > 0 && strcmp(tokens[0].value, "pwd") == 0)
+		shell_pwd(tokens);
+	else if(token_count > 0 && strcmp(tokens[0].value, "env") == 0)
+		shell_env();
+	else if(token_count > 0 && strcmp(tokens[0].value, "cd") == 0)
+		shell_cd(tokens);
+	// else if(token_count > 0 && strcmp(tokens[0].value, "export") == 0)
+	// 	shell_export(tokens[1].value);
+	// else if(token_count > 0 && strcmp(tokens[0].value, "unset") == 0)
+	// 	shell_unset(tokens);
 	else// Placeholder for parsing other commands
 		return;
 		// printf("Other command parsing is not implemented yet.\n");

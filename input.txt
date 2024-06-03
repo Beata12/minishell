@@ -1,3 +1,0 @@
-Other command parsing is not implemented yet.
-[?2004hminishell> 
-minishell> 
