@@ -3,18 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:42 by bmarek            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/03 21:23:37 by aneekhra         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/03 22:17:20 by bmarek           ###   ########.fr       */
->>>>>>> 36455e6b1eb5804da62786fd564f2489e55a4439
+/*   Updated: 2024/06/03 22:20:23 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parsing.h"
 
-
+int shell_exit(Token *args)
+{
+    // Free memory allocated for each argument
+    if (args != NULL) {
+        for (int i = 0; args[i].value2 != NULL; i++) {
+            free(args[i].value2);
+        }
+        //free(args);
+    }
+    exit(0);
+}
