@@ -3,65 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 12:48:10 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/04 13:55:34 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void shell_export(Token *args) {
-    extern char **environ;
+int shell_export(Token *args)
+{
+    int i = 1;
+    char *key;
+    char *value;
 
-    if (args[1].value == NULL) {
-        // No argument, print all environment variables
-        for (char **env = environ; *env != 0; env++) {
-            printf("%s\n", *env);
-        }
-    } else {
-        // Parse the argument
-        char *name = strtok(args[1].value, "=");
-        char *value = strtok(NULL, "=");
+    while (args[i].value[0] != '\0') {
+        key = strtok(args[i].value, "=");
+        value = strtok(NULL, "=");
 
-        if (name && value) {
-            // Check for invalid name format (optional)
-            if (strcspn(name, " \t\n=") != strlen(name)) {
-                fprintf(stderr, "minishell: export: invalid variable name\n");
-                return;
-            }
-
-            // Find if the variable already exists
-            int index = find_env_var(name);
-            if (index != -1) {
-                // Replace existing value
-                size_t len = strlen(name) + strlen(value) + 2;
-                char *new_env_var = malloc(len);
-                snprintf(new_env_var, len, "%s=%s", name, value);
-                environ[index] = new_env_var;
-            } else {
-                // Add new environment variable
-                size_t len = strlen(name) + strlen(value) + 2;
-                char *new_env_var = malloc(len);
-                snprintf(new_env_var, len, "%s=%s", name, value);
-
-                // Count current environment variables
-                int env_count = 0;
-                while (environ[env_count] != NULL) {
-                    env_count++;
-                }
-
-                // Allocate space for the new environment variable
-                environ = realloc(environ, (env_count + 2) * sizeof(char *));
-                environ[env_count] = new_env_var;
-                environ[env_count + 1] = NULL;
+        if (key && value) {
+            if (setenv(key, value, 1) != 0) {
+                perror("export");
+                return 1;
             }
         } else {
-            fprintf(stderr, "minishell: export: invalid format\n");
+            fprintf(stderr, "export: invalid format\n");
+            return 1;
         }
+        i++;
     }
+    return 0;
 }
+
+
+
+
+// void shell_export(Token *args) {
+//     extern char **environ;
+
+//     if (args[1].value == NULL) {
+//         // No argument, print all environment variables
+//         for (char **env = environ; *env != 0; env++) {
+//             printf("%s\n", *env);
+//         }
+//     } else {
+//         // Parse the argument
+//         char *name = strtok(args[1].value, "=");
+//         char *value = strtok(NULL, "=");
+
+//         if (name && value) {
+//             // Check for invalid name format (optional)
+//             if (strcspn(name, " \t\n=") != strlen(name)) {
+//                 fprintf(stderr, "minishell: export: invalid variable name\n");
+//                 return;
+//             }
+
+//             // Find if the variable already exists
+//             int index = find_env_var(name);
+//             if (index != -1) {
+//                 // Replace existing value
+//                 size_t len = strlen(name) + strlen(value) + 2;
+//                 char *new_env_var = malloc(len);
+//                 snprintf(new_env_var, len, "%s=%s", name, value);
+//                 environ[index] = new_env_var;
+//             } else {
+//                 // Add new environment variable
+//                 size_t len = strlen(name) + strlen(value) + 2;
+//                 char *new_env_var = malloc(len);
+//                 snprintf(new_env_var, len, "%s=%s", name, value);
+
+//                 // Count current environment variables
+//                 int env_count = 0;
+//                 while (environ[env_count] != NULL) {
+//                     env_count++;
+//                 }
+
+//                 // Allocate space for the new environment variable
+//                 environ = realloc(environ, (env_count + 2) * sizeof(char *));
+//                 environ[env_count] = new_env_var;
+//                 environ[env_count + 1] = NULL;
+//             }
+//         } else {
+//             fprintf(stderr, "minishell: export: invalid format\n");
+//         }
+//     }
+// }
 
 
 // {

@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:09:26 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 22:15:28 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:41:42 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,7 @@ void parser(char *input_command)
 	// ft_execvp(input_command, tokens[i].value);
 	
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
-	{
-		shell_echo(tokens, token_count);
-		// Handle echo command
-		//printf("Echoing:");
-		// while (i < token_count)
-		// { // Loop through tokens starting from index 1
-		// 	printf("%s ", tokens[i].value); // Print token value
-		// 	i++; // Increment counter
-		// }
-		// printf("\n");
-	}
+		shell_echo(tokens);
 	else if(token_count > 0 && strcmp(tokens[0].value, "exit") == 0)
 		shell_exit(tokens);
 	else if(token_count > 0 && strcmp(tokens[0].value, "pwd") == 0)
@@ -93,8 +83,8 @@ void parser(char *input_command)
 		shell_env();
 	else if(token_count > 0 && strcmp(tokens[0].value, "cd") == 0)
 		shell_cd(tokens);
-	// else if(token_count > 0 && strcmp(tokens[0].value, "export") == 0)
-	// 	shell_export(tokens);
+	else if(token_count > 0 && strcmp(tokens[0].value, "export") == 0)
+		shell_export(tokens);
 	else if(token_count > 0 && strcmp(tokens[0].value, "unset") == 0)
 		shell_unset(tokens);
 	else if (token_count > 0 && strcmp(tokens[0].value, "ls") == 0)
@@ -107,6 +97,8 @@ void parser(char *input_command)
     	shell_mkdir(tokens, token_count);
 	else if (token_count > 0 && strcmp(tokens[0].value, "clear") == 0)
     	shell_clear();
+	else if (token_count > 0 && strcmp(tokens[0].value, "rmdir") == 0) 
+        shell_rmdir(tokens, token_count);
 	else
 		printf("Command '%s' not found.\n", input_command);
 }

@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 21:58:54 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:32:10 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,18 @@ void	ft_putstr_minus_fd(char *s, int len, int fd);
 
 int		my_strcmp(const char *s1, const char *s2);
 int		shell_cd(Token *args);
-int     shell_echo(Token tokens[], int token_count);
+// int     shell_echo(Token tokens[], int token_count);
+int shell_echo(Token *args);
 // int		shell_echo(Token *args);
 int		shell_env(void);
 int     shell_exit(Token *args);
-void	shell_export(Token *arg);
+int	shell_export(Token *args);
 int		shell_pwd(Token *argv);
 void	shell_unset(Token *args);
 int     shell_ls(Token tokens[], int token_count);
 int     shell_touch(Token tokens[], int token_count);
 int     shell_rm(Token tokens[], int token_count);
+int     shell_rmdir(Token tokens[], int token_count);
 int     shell_mkdir(Token tokens[], int token_count);
 int     shell_clear(void);
 int     ft_newline(char **av);
