@@ -6,7 +6,7 @@
 #    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/04 13:39:51 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/06/04 19:22:46 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,13 @@ LIBFTFOLDER = Libft
 LIBFT = $(LIBFTFOLDER)/libft.a
 
 OBJS = $(SRCS:.c=.o)
+
+# Color definitions
+GREEN = \033[0;32m
+RED = \033[0;31m
+CYAN = \033[0;36m
+MAGENTA = \033[0;35m
+ENDCOLOR = \033[0m
 
 all: $(NAME)
 
