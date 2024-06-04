@@ -80,7 +80,7 @@ void parser(char *input_command)
 		//printf("Echoing:");
 		// while (i < token_count)
 		// { // Loop through tokens starting from index 1
-		// 	printf(" %s", tokens[i].value); // Print token value
+		// 	printf("%s ", tokens[i].value); // Print token value
 		// 	i++; // Increment counter
 		// }
 		// printf("\n");
@@ -94,9 +94,9 @@ void parser(char *input_command)
 	else if(token_count > 0 && strcmp(tokens[0].value, "cd") == 0)
 		shell_cd(tokens);
 	// else if(token_count > 0 && strcmp(tokens[0].value, "export") == 0)
-	// 	shell_export(tokens[1].value);
-	// else if(token_count > 0 && strcmp(tokens[0].value, "unset") == 0)
-	// 	shell_unset(tokens);
+	// 	shell_export(tokens);
+	else if(token_count > 0 && strcmp(tokens[0].value, "unset") == 0)
+		shell_unset(tokens);
 	else// Placeholder for parsing other commands
 		return;
 		// printf("Other command parsing is not implemented yet.\n");

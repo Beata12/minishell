@@ -12,7 +12,30 @@
 
 #include "../../include/minishell.h"
 
+// int shell_echo(Token *args) {
+//     int i = 1;
+//     while (args[i].value != NULL) {
+//         printf("%s", args[i].value);
+//         i++;
+//         if (args[i].value != NULL)
+//             printf(" ");
+//     }
+//     printf("\n");
+//     return 0;
+// }
+
 int shell_echo(Token *args)
+{
+	int i = 1;
+	// while (args[i])
+	// {
+		printf("%s", args[i].value);
+		i++;
+	// }
+	printf("\n");
+	return (0);
+}
+
 // {
 //     int i = 1; // Start after the "echo" command itself
 //     int newline = 1;
@@ -38,27 +61,6 @@ int shell_echo(Token *args)
 
 //     return 0;
 // }
-
-
-{
-	int i = 1;
-	int newline = 1;
-	if (args[1].value && ft_strcmp(args[1].value, "-n") == 0)
-	{
-		newline = 0;
-		i++;
-	}
-	while (args[i].value)
-	{
-		printf("%s", args[i].value);
-		i++;
-		// if (args[++i].value)
-		// 	printf(" ");
-	}
-	if (newline)
-		printf("\n");
-	return (0);
-}
 
 // int main(int argc, char *argv[])
 // {

@@ -59,22 +59,22 @@ int		my_strcmp(const char *s1, const char *s2);
 int		shell_cd(Token *args);
 int		shell_echo(Token *args);
 int		shell_env(void);
-int shell_exit(Token *args);
-void		shell_export(char *arg);
+int     shell_exit(Token *args);
+void	shell_export(Token *arg);
 int		shell_pwd(Token *argv);
-void	shell_unset(char **args);
-int ft_newline(char **av);
-void parser(char *input_command);
-int	check_str(char *input);
+void	shell_unset(Token *args);
+int     ft_newline(char **av);
+void    parser(char *input_command);
+int     check_str(char *input);
 
-int	print_error_msg_pipe(char *str);
-int	print_error_msg_ampresent(char *str);
-int	print_error_msg_closing_brace(char *str);
-int	print_error_msg_closing_square(char *str);
-int	print_error_msg_closing_curly(char *str);
+int	    print_error_msg_pipe(char *str);
+int 	print_error_msg_ampresent(char *str);
+int 	print_error_msg_closing_brace(char *str);
+int	    print_error_msg_closing_square(char *str);
+int 	print_error_msg_closing_curly(char *str);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
-int	ft_strcmp(char *str, char *in);
+int	    ft_strcmp(char *str, char *in);
 
 void handle_redirection(char *input);
 

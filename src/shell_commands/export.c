@@ -12,18 +12,19 @@
 
 #include "../../include/minishell.h"
 
-extern char **environ;
 
-void shell_export(char *args)
+void shell_export(Token *args)
 {
-	if (args[1] == NULL) {
+	extern char **environ;
+
+	if (args[1].value == NULL) {
 		// No argument, print all environment variables
 		for (char **env = environ; *env != 0; env++) {
 			printf("%s\n", *env);
 		}
 	} else {
 		// Parse the argument
-		char *name = strtok(args[1], "=");
+		char *name = strtok(args[1].value, "=");
 		char *value = strtok(NULL, "=");
 
 		if (name && value) {
@@ -57,7 +58,6 @@ void shell_export(char *args)
 		}
 	}
 }
-
 
 
 // {

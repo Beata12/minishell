@@ -17,28 +17,24 @@ extern char **environ;
 int find_env_var(const char *name) {
 	int len = strlen(name);
 	for (int i = 0; environ[i] != NULL; i++) {
-		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=') {
+		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
 			return i;
-		}
 	}
 	return -1;
 }
 
-void shell_unset(char **args)
+void shell_unset(Token *args)
 {
-	if (args[1] == NULL) {
+	if (args[1].value == NULL) {
 		fprintf(stderr, "minishell: expected argument to \"unset\"\n");
 		return;
 	}
-	int index = find_env_var(args[1]);
+	int index = find_env_var(args[1].value);
 	if (index == -1) {
-		fprintf(stderr, "minishell: environment variable '%s' not found\n", args[1]);
+		fprintf(stderr, "minishell: environment variable '%s' not found\n", args[1].value);
 		return;
 	}
-
-	// Free the memory allocated for the environment variable string
 	free(environ[index]);
-
 	// Shift the remaining variables up by one
 	for (int i = index; environ[i] != NULL; i++) {
 		environ[i] = environ[i + 1];
