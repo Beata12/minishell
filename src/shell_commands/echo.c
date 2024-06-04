@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
 /*   Updated: 2024/06/03 22:15:54 by aneekhra         ###   ########.fr       */
@@ -11,6 +11,34 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int shell_echo(Token tokens[], int token_count)
+{
+	int i;
+
+	i = 1;
+	while (i < token_count)
+	{
+		printf("%s ", tokens[i].value);
+		i++;
+	}
+
+    printf("\n");
+    return 0; // Success
+}
+
+// int shell_echo(Token *args)
+// {
+// 	int i = 1;
+// 	// while (args[i])
+// 	// {
+// 		printf("%s", args[i].value);
+// 		i++;
+// 	// }
+// 	printf("\n");
+// 	return (0);
+// }
+
 
 // int shell_echo(Token *args) {
 //     int i = 1;
@@ -24,17 +52,6 @@
 //     return 0;
 // }
 
-int shell_echo(Token *args)
-{
-	int i = 1;
-	// while (args[i])
-	// {
-		printf("%s", args[i].value);
-		i++;
-	// }
-	printf("\n");
-	return (0);
-}
 
 // {
 //     int i = 1; // Start after the "echo" command itself

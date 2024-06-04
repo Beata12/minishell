@@ -26,7 +26,12 @@ SRCS =  src/minishell.c \
 		src/shell_commands/cd.c \
 		src/shell_commands/exit.c \
 		src/shell_commands/pwd.c \
-		src/shell_commands/unset.c
+		src/shell_commands/unset.c \
+		src/shell_commands/ls.c \
+		src/shell_commands/touch.c \
+		src/shell_commands/rm.c \
+		src/shell_commands/mkdir.c \
+		src/shell_commands/clear.c \
 #src/shell_commands/export.c
 
 LIBFTFOLDER = Libft

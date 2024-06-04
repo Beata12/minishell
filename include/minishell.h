@@ -25,9 +25,11 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include<sys/param.h>
+#include <sys/stat.h>
+#include <sys/param.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <dirent.h>
 #include "parsing.h"
 
 #define HISTORY_FILE ".minishell_history"
@@ -57,12 +59,18 @@ void	ft_putstr_minus_fd(char *s, int len, int fd);
 
 int		my_strcmp(const char *s1, const char *s2);
 int		shell_cd(Token *args);
-int		shell_echo(Token *args);
+int     shell_echo(Token tokens[], int token_count);
+// int		shell_echo(Token *args);
 int		shell_env(void);
 int     shell_exit(Token *args);
 void	shell_export(Token *arg);
 int		shell_pwd(Token *argv);
 void	shell_unset(Token *args);
+int     shell_ls(Token tokens[], int token_count);
+int     shell_touch(Token tokens[], int token_count);
+int     shell_rm(Token tokens[], int token_count);
+int     shell_mkdir(Token tokens[], int token_count);
+int     shell_clear(void);
 int     ft_newline(char **av);
 void    parser(char *input_command);
 int     check_str(char *input);

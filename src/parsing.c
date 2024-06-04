@@ -75,7 +75,7 @@ void parser(char *input_command)
 	
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
 	{
-		shell_echo(tokens);
+		shell_echo(tokens, token_count);
 		// Handle echo command
 		//printf("Echoing:");
 		// while (i < token_count)
@@ -97,9 +97,18 @@ void parser(char *input_command)
 	// 	shell_export(tokens);
 	else if(token_count > 0 && strcmp(tokens[0].value, "unset") == 0)
 		shell_unset(tokens);
-	else// Placeholder for parsing other commands
-		return;
-		// printf("Other command parsing is not implemented yet.\n");
+	else if (token_count > 0 && strcmp(tokens[0].value, "ls") == 0)
+        shell_ls(tokens, token_count);
+	else if (token_count > 0 && strcmp(tokens[0].value, "touch") == 0)
+    	shell_touch(tokens, token_count);
+	else if (token_count > 0 && strcmp(tokens[0].value, "rm") == 0)
+    	shell_rm(tokens, token_count);
+	else if (token_count > 0 && strcmp(tokens[0].value, "mkdir") == 0)
+    	shell_mkdir(tokens, token_count);
+	else if (token_count > 0 && strcmp(tokens[0].value, "clear") == 0)
+    	shell_clear();
+	else
+		printf("Command '%s' not found.\n", input_command);
 }
 
 // void parser(char *input_command)

@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 09:58:35 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/03 21:55:59 by aneekhra         ###   ########.fr       */
+/*   Created: 2024/06/04 12:25:21 by bmarek            #+#    #+#             */
+/*   Updated: 2024/06/03 12:48:55 by bmarek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parsing.h"
 
-int shell_cd(Token *args)
+int shell_rm(Token tokens[], int token_count)
 {
-	if (!args[1].value)
-	{
-		fprintf(stderr, "cd: missing argument\n");
-		return 1;
-	}
-	if (chdir(args[1].value) != 0)//changing diractory
-	{
-		perror("cd");
-		return 1;
-	}
-	return (0);
+    int i;
+
+    i = 1;
+    if (token_count < 2)
+    {
+        fprintf(stderr, "Usage: rm <filename>\n");
+        return 1;
+    }
+    while (i < token_count) {
+        if (unlink(tokens[i].value) == -1) {
+            perror("unlink");
+            return 1;
+        }
+        i++;
+    }
+    return 0; // Success
 }
