@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/04 14:32:10 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:27:11 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@
 #define HISTORY_FILE ".minishell_history"
 extern char **environ;
 
+// Global variables
+
 // Function prototypes
+void execute_command(Token *tokens, int token_count);
+void print_token_info(Token *tokens, int token_count);
 void display_prompt(void);
 size_t	ft_strlen(const char *s);
 void setup_signal_handlers(void);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
-char **split_input(char *input);
-void execute_command(char **args);
-int ft_execvp(const char *args, char **argv);
 //void execute_command(char **args);
 int ft_newline(char **av);
-void execute_command(char **args);
 int	check_str(char *input);
 void load_history();
 void save_history();
@@ -85,7 +85,8 @@ int 	print_error_msg_closing_curly(char *str);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 int	    ft_strcmp(char *str, char *in);
-
-void handle_redirection(char *input);
+void handle_redirection(Token *tokens, int token_count);
+void handle_heredoc(Token *tokens, int token_count);
+// void handle_redirection(char *input);
 
 #endif

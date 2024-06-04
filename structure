@@ -1,103 +1,17 @@
-# main program - minishell.c
+We did:
+# 1. setup_signal_handler
+# 2. history
+# 3. display_prompt
+# 4. read_command
+# 5. shell_command
+# 6. implement_keyboard "ctrl" functions
 
-# prompt.c
-
-# PARSING
-
-parser.c
-
-# EXECUTION
-
-executor.c
-
-# shell_commands
-
-## done?
-
-- echo.c
-- cd.c
-- pwd.c
-- env.c
-
-## to do
-
-- export.c
-- unset.c
-- exit.c
-- touch.c
-- mkdir.c
-
-- clear
-
-## redirection on good tract
-
-#history.cour handle_sigquit function by doing nothing.
-
-    handle semicolens, backslash
-    handle qutations "" '' !! important - almost done
-    handle redaraction
-    Handle $?
-    handle $ symbol
-
-header files:
-#minishell.h
-shell_commands.h
-
-    Implement pipes
-
-#Makefile
-
-#split function to make parsing work better
-
-#controling keebord (ctr-d, crtl-c, ctrl-\)
-#{ Handle ctrl-C: This is handled in our handle_sigint function.
-Handle ctrl-D: readline returns NULL on EOF (which is triggered by ctrl-D).
-Handle ctrl-\: This is handled in our handle_sigquit function by doing nothing.
-}
-
-    handle semicolens, backslash
-    handle qutations "" '' !! important
-    handle redaraction
-    Handle $?
-    handle $ symbol
-
-header files:
-#minishell.h
-shell_commands.h
-
-    Implement pipes
-
-#Makefile
-
-#split function to make improve parsing
-
-int main() {
-char* gjs_debug_topics = getenv("GJS_DEBUG_TOPICS");
-char* language = getenv("LANGUAGE");
-char* lc_time = getenv("LC_TIME");
-char* user = getenv("USER");
-char* xdg_session_type = getenv("XDG_SESSION_TYPE");
-char* shlvl = getenv("SHLVL");
-char* xdg_cache_home = getenv("XDG_CACHE_HOME");
-char* home = getenv("HOME");
-char* desktop_session = getenv("DESKTOP_SESSION");
-char* gio_launched_desktop_file = getenv("GIO_LAUNCHED_DESKTOP_FILE");
-char* gtk_modules = getenv("GTK_MODULES");
-char* xdg_seat_path = getenv("XDG_SEAT_PATH");
-
-    printf("GJS_DEBUG_TOPICS: %s\n", gjs_debug_topics);
-    printf("LANGUAGE: %s\n", language);
-    printf("LC_TIME: %s\n", lc_time);
-    printf("USER: %s\n", user);
-    printf("XDG_SESSION_TYPE: %s\n", xdg_session_type);
-    printf("SHLVL: %s\n", shlvl);
-    printf("XDG_CACHE_HOME: %s\n", xdg_cache_home);
-    printf("HOME: %s\n", home);
-    printf("DESKTOP_SESSION: %s\n", desktop_session);
-    printf("GIO_LAUNCHED_DESKTOP_FILE: %s\n", gio_launched_desktop_file);
-    printf("GTK_MODULES: %s\n", gtk_modules);
-    printf("XDG_SEAT_PATH: %s\n", xdg_seat_path);
-
-    return 0;
-
-}
+we have to do
+    # have to fix 
+        export
+    # execution
+    #redirection
+    #pipe
+    #handel Quotation
+    #handel ENTER
+    #handel '$', '\', '\\', '"', '''
