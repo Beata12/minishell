@@ -6,7 +6,7 @@
 #    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/03 19:01:02 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/06/04 13:39:51 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =  src/minishell.c \
 		src/shell_commands/unset.c \
 		src/shell_commands/ls.c \
 		src/shell_commands/touch.c \
+		src/shell_commands/export.c \
 		src/shell_commands/rm.c \
 		src/shell_commands/mkdir.c \
 		src/shell_commands/clear.c \
