@@ -49,7 +49,4 @@ This project is being developed on the Linux operating system.
 - pwd without options
 - export without options
 - env without options or arguments
--
--
--
 - exit without options
