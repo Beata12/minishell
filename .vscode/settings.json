@@ -1,11 +1,5 @@
 {
-	"files.associations": {
-		"minishell.h": "c",
-		"history.h": "c",
-		"shell_commands.h": "c",
-		"dirent.h": "c",
-		"readline.h": "c",
-		"wait.h": "c",
-		"parsing.h": "c"
-	}
+  "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  }
 }

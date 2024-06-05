@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 22:05:51 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:41:16 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,17 +174,132 @@ void error_str(void)
 	g_exit_status = 258;
 }
 
-volatile sig_atomic_t sigint_received = 0;
 
-// Signal handler function for SIGINT (Ctrl+C)
-void sigint_handler(int signum) {
-	sigint_received = 1;
+
+
+
+char	*find_path(char *cmd, char *path)
+{
+	char	*c;
+	char	*tmp;
+	char	**paths;
+	int		i;
+	int		fd;
+
+	i = 0;
+	paths = ft_split(path, ':');
+	while (paths[i] != NULL)
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		c = ft_strjoin(tmp, cmd);
+		free(tmp);
+		fd = open(c, O_RDONLY);
+		if (fd != -1)
+		{
+			close(fd);
+			return (c);
+		}
+		free(c);
+		i++;
+	}
+	return (NULL);
+}
+void ft_exe(char *cmd, char **env);
+
+
+
+void ft_execute(char **cmds, char **env, t_args *args)
+{
+	int fd[2];
+	pid_t pid;
+	int i = 0;
+	int pipes = 0 ;
+	while(cmds[i] != NULL)
+	{
+		i++;
+		pipes++;
+	}
+	i = 0;
+
+	while (i < pipes)
+	{
+		pipe(fd);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (i != 0)
+			{
+				dup2(fd[0], 0);
+				close(fd[0]);
+			}
+			if (cmds[i + 1] != NULL)
+				dup2(fd[1], 1);
+			//heardoc
+			open_input_files(args->input_files);
+			open_output_files(args->output_files);
+			close(fd[1]);
+			ft_exe(cmds[i], env);
+			exit(0);
+		}
+		else
+		{
+			waitpid(pid, NULL, 0);
+			close (fd[0]);
+			close(fd[1]);
+			fd[0] = fd[0];
+		}
+		i++;
+	}
+}
+void execute(char *input, char **env);
+
+void ft_exe(char *cmd, char **env)
+{
+	if (ft_strncmp(cmd, "cd", 2) == 0)
+		printf("cd\n");
+	else if (ft_strncmp(cmd, "echo", 4) == 0)
+		printf("echo\n");
+	else if (ft_strncmp(cmd, "env", 3) == 0)
+		printf("env\n");
+	else if (ft_strncmp(cmd, "exit", 4)	== 0)
+		printf("exit\n");
+	else if (ft_strncmp(cmd, "export", 6) == 0)
+		printf("export\n");
+	else if (ft_strncmp(cmd, "pwd", 3)	== 0)
+		printf("pwd\n");
+	else if (ft_strncmp(cmd, "unset", 5) == 0)
+		printf("unset\n");
+	else
+		execute(cmd, env);
 }
 
-void display_prompt(void)
+
+void execute(char *input, char **env)
+{
+	char **cmds = ft_split(input, ' ');
+	int i = 0;
+	while(ft_strncmp(env[i], "PATH=", 5) != 0)
+		i++;
+	char *tmp = env[i];
+	if (ft_strchr(cmds[0], '/') != NULL)
+	{
+		execve(cmds[0], cmds, env);
+	}
+	char *path = find_path(cmds[0], tmp);
+	if (path == NULL)
+	{
+		printf("Command not found\n");
+		exit(0);
+	}
+	execve(path, cmds, env);
+	free(path);
+	exit(0);
+}
+
+void display_prompt(char **env)
 {
 	char *input;
-
+	char **cmds;
 	load_history();
 
 	// Register SIGINT handler
@@ -199,25 +314,27 @@ void display_prompt(void)
 			printf("exit\n");
 			break;
 		}
-		if (*input)
-			add_history(input);
-		if (check_str(input) != 0)
-			error_str();
+		if (!*input)
+			continue;
+		// if (check_str(input) != 0)
+		// 	error_str();
 		else
 			// handle_redirection(input);
 			parser(input);
+			// cmds = ft_split(input, '|'); // parse the input
+			// ft_execute(cmds, env);
 		free(input);
 	}
 	save_history();
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
 	if (!argc && !argv)
 		return (0);
 	g_exit_status = 0;
 	ft_printf("Welcome to minishell!\n");
 	setup_signal_handlers();
-	display_prompt();
+	display_prompt(env);
 	return g_exit_status;
 }

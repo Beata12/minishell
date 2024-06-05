@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/05 14:51:11 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:53:35 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,30 @@
 #define HISTORY_FILE ".minishell_history"
 extern char **environ;
 
+
+typedef struct s_list
+{
+    char *content;
+    struct s_list *next;
+} t_list;
+
+
+typedef struct s_args
+{
+    int pipes;
+    char **cmds;
+    char **infiles;
+    char **outfiles;
+    t_list *env;
+    
+} t_args;
+
 // Global variables
 
 // Function prototypes
 void execute_command(Token *tokens, int token_count);
 void print_token_info(Token *tokens, int token_count);
-void display_prompt(void);
+void display_prompt(char **env);
 size_t	ft_strlen(const char *s);
 void setup_signal_handlers(void);
 void handle_sigint(int sig);

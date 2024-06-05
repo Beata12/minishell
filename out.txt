@@ -1,0 +1,4 @@
+hi >out.txt
+[?2004hminishell> [Kminishell> 
+minishell> [?2004l
+exit
