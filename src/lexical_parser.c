@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:24:36 by bmarek            #+#    #+#             */
 /*   Updated: 2024/06/04 19:54:57 by aneekhra         ###   ########.fr       */

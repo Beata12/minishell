@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:01:18 by bmarek            #+#    #+#             */
 /*   Updated: 2024/06/04 21:29:56 by aneekhra         ###   ########.fr       */
