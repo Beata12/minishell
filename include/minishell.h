@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/04 21:27:11 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:51:11 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int 	print_error_msg_closing_curly(char *str);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 int	    ft_strcmp(char *str, char *in);
-void    handle_redirection(Token *tokens, int token_count);
-void    handle_heredoc(Token *tokens, int token_count);
+void    handle_redirection(char *input);
+void    handle_heredoc(const char *delimiter);
 // void handle_redirection(char *input);
 
 #endif
