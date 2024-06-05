@@ -49,41 +49,6 @@ void    handle_heredoc(Token *tokens,int token_count)
     close(pipe_fd[0]); // Close the read end of the pipe after dup2
 }
 
-// void handle_heredoc(const char *delimiter) {
-//     char *line = NULL;
-//     int pipe_fd[2];
-
-//     if (pipe(pipe_fd) == -1) {
-//         perror("pipe");
-//         exit(EXIT_FAILURE);
-//     }
-
-//     while (1) {
-//         printf("> ");
-//         line = get_next_line(STDIN_FILENO);
-//         if (line == NULL) {
-//             perror("get_next_line");
-//             close(pipe_fd[0]);
-//             close(pipe_fd[1]);
-//             exit(EXIT_FAILURE);
-//         }
-//         if (strncmp(line, delimiter, strlen(delimiter)) == 0 && line[strlen(delimiter)] == '\n') {
-//             free(line);
-//             break;
-//         }
-//         write(pipe_fd[1], line, strlen(line));
-//         free(line);
-//     }
-//     close(pipe_fd[1]); // Close the write end of the pipe
-
-//     if (dup2(pipe_fd[0], STDIN_FILENO) == -1) {
-//         perror("dup2");
-//         close(pipe_fd[0]);
-//         exit(EXIT_FAILURE);
-//     }
-//     close(pipe_fd[0]); // Close the read end of the pipe after dup2
-// }
-
 int redirect_input(const char *filename) {
     int fd = open(filename, O_RDONLY);
     if (fd == -1) {
@@ -152,43 +117,5 @@ void handle_redirection(Token *tokens, int token_count) {
             dup2(fd, STDIN_FILENO);
             close(fd);
         }
-        // Add other cases for different redirection types if needed
     }
 }
-// void handle_redirection(char *input) {
-//     char *token;
-//     char *filename;
-//     int append = 0;
-
-//     while ((token = strpbrk(input, "<>"))) {
-//         if (*token == '<') {
-//             if (*(token + 1) == '<') {
-//                 *token = '\0';
-//                 filename = strtok(token + 2, " ");
-//                 handle_heredoc(filename);
-//             } else {
-//                 *token = '\0';
-//                 filename = strtok(token + 1, " ");
-//                 if (redirect_input(filename) == -1) {
-//                     perror("redirect_input");
-//                     return;
-//                 }
-//             }
-//         } else if (*token == '>') {
-//             if (*(token + 1) == '>') {
-//                 append = 1;
-//                 *token = '\0';
-//                 filename = strtok(token + 2, " ");
-//             } else {
-//                 append = 0;
-//                 *token = '\0';
-//                 filename = strtok(token + 1, " ");
-//             }
-//             if (redirect_output(filename, append) == -1) {
-//                 perror("redirect_output");
-//                 return;
-//             }
-//         }
-//         input = token + strlen(token) + 1;
-//     }
-// }
