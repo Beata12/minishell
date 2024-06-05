@@ -3,127 +3,175 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 10:01:18 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/04 21:29:56 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:35:43 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "../include/parsing.h"
 
-void    handle_heredoc(Token *tokens,int token_count)
+void	handle_heredoc(const char *delimiter)
 {
-    char *line = NULL;
-    int pipe_fd[2];
+	char	*line = NULL;
+	int	len = 0;
+	FILE	*tmp_file = tmpfile();
 
-    if (pipe(pipe_fd) == -1) {
-        perror("pipe");
-        exit(EXIT_FAILURE);
-    }
-
-    while (1) {
-        printf("> ");
-        line = get_next_line(STDIN_FILENO);
-        if (line == NULL) {
-            perror("get_next_line");
-            close(pipe_fd[0]);
-            close(pipe_fd[1]);
-            exit(EXIT_FAILURE);
-        }
-        if (strncmp(line, tokens[token_count].value, strlen(tokens[token_count].value)) == 0 && line[strlen(tokens[token_count].value)] == '\n') {
-            free(line);
-            break;
-        }
-        write(pipe_fd[1], line, strlen(line));
-        free(line);
-    }
-    close(pipe_fd[1]); // Close the write end of the pipe
-
-    if (dup2(pipe_fd[0], STDIN_FILENO) == -1) {
-        perror("dup2");
-        close(pipe_fd[0]);
-        exit(EXIT_FAILURE);
-    }
-    close(pipe_fd[0]); // Close the read end of the pipe after dup2
+	if (!tmp_file) {
+		perror("tmpfile");
+		exit(EXIT_FAILURE);
+	}
+    int fd = open(delimiter, O_RDONLY);
+	while (1)
+	{
+		printf("> ");
+		get_next_line(fd);
+		if (strncmp(line, delimiter, strlen(delimiter)) == 0
+			&& line[strlen(delimiter)] == '\n')
+		{
+			break;
+		}
+		fprintf(tmp_file, "%s", line);
+	}
+	fseek(tmp_file, 0, SEEK_SET);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	free(line);
+	//fclose(tmp_file);
 }
 
-int redirect_input(const char *filename) {
+
+int redirect_input(const char *filename)
+{       
     int fd = open(filename, O_RDONLY);
-    if (fd == -1) {
+    
+    if (fd == -1)
+    {
         perror("open");
-        return -1;
+        return -1; // Zwracamy -1 w przypadku błędu
     }
-    if (dup2(fd, STDIN_FILENO) == -1) {
+    if (dup2(fd, STDIN_FILENO) == -1)
+    {
         perror("dup2");
         close(fd);
-        return -1;
+        return -1; // Zwracamy -1 w przypadku błędu
     }
     close(fd);
-    return 0;
+    return 0; // Zwracamy 0 w przypadku sukcesu
 }
 
 int redirect_output(const char *filename, int append)
 {
-    int fd;
-    if (append)
-        fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    else
-        fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    int fd = open(filename, O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC), 0644);
+    
     if (fd == -1)
     {
         perror("open");
-        return -1;
+        return -1; // Zwracamy -1 w przypadku błędu
     }
     if (dup2(fd, STDOUT_FILENO) == -1)
     {
         perror("dup2");
         close(fd);
-        return -1;
+        return -1; // Zwracamy -1 w przypadku błędu
     }
     close(fd);
-    return 0; // Return 0 on success
+    return 0; // Zwracamy 0 w przypadku sukcesu
 }
 
-void handle_redirection(Token *tokens, int token_count) {
-    for (int i = 0; i < token_count; i++) {
-        if (tokens[i].type == T_RED_TO) {
-            int fd = open(tokens[i+1].value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-            if (fd < 0) {
-                perror("Error opening file");
-                exit(1);
-            }
-            
-            dup2(fd, STDOUT_FILENO);
-            close(fd);
-        }
-        // else if (tokens[i].type == T_DGREAT) {
-        //     int fd = open(tokens[i+1].value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-        //     if (fd < 0) {
-        //         perror("Error opening file");
-        //         exit(1);
-        //     }
-        //     dup2(fd, STDOUT_FILENO);
-        //     close(fd);
-        // }
-        else if (tokens[i].type == T_DGREAT)
+
+void handle_redirection(char *input)
+{
+    char *token;
+    char *filename;
+    int append = 0;
+
+    while ((token = strpbrk(input, "<>")))
+    {
+        if (*token == '<')
         {
-            int fd = redirect_output(tokens[i+1].value, 1); // Set append flag to 1
-            if (fd == -1)
-            {
-                perror("Error redirecting output");
-                exit(1);
+            if (*(token + 1) == '<')
+            { // handle heredoc
+                *token = '\0';
+                filename = strtok(token + 2, " ");
+                handle_heredoc(filename);
+            }
+            else
+            { // handle input redirection
+                *token = '\0';
+                filename = strtok(token + 1, " ");
+                if (redirect_input(filename) == -1) {
+                    perror("redirect_input");
+                    return; // Kontynuujemy działanie pomimo błędu
+                }
             }
         }
-        else if (tokens[i].type == T_RED_FROM) {
-            int fd = open(tokens[i+1].value, O_RDONLY);
-            if (fd < 0) {
-                perror("Error opening file");
-                exit(1);
+        else if (*token == '>')
+        {
+            if (*(token + 1) == '>')
+            { // handle output append redirection
+                append = 1;
+                *token = '\0';
+                filename = strtok(token + 2, " ");
             }
-            dup2(fd, STDIN_FILENO);
-            close(fd);
+            else
+            { // handle output redirection
+                append = 0;
+                *token = '\0';
+                filename = strtok(token + 1, " ");
+            }
+            if (redirect_output(filename, append) == -1) {
+                perror("redirect_output");
+                return; // Kontynuujemy działanie pomimo błędu
+            }
         }
+        input = token + strlen(filename) + 1;
     }
 }
+
+// void	handle_redirection(char *input)
+// {
+// 	char	*token;
+// 	char	*filename;
+// 	int		append = 0;
+
+// 	while ((token = strpbrk(input, "<>")))
+// 	{
+// 		if (*token == '<')
+// 		{
+// 			if (*(token + 1) == '<')
+// 			{// handle heredoc
+// 				*token = '\0';
+// 				filename = strtok(token + 2, " ");
+// 				handle_heredoc(filename);
+// 			}
+// 			else
+// 			{// handle input redirection
+// 				*token = '\0';
+// 				filename = strtok(token + 1, " ");
+// 				redirect_input(filename);
+// 			}
+// 		}
+// 		else if (*token == '>')
+// 		{
+// 			if (*(token + 1) == '>')
+// 			{// handle output append redirection
+// 				append = 1;
+// 				*token = '\0';
+// 				filename = strtok(token + 2, " ");
+// 			}
+// 			else
+// 			{// handle output redirection
+// 				append = 0;
+// 				*token = '\0';
+// 				filename = strtok(token + 1, " ");
+// 			}
+// 			redirect_output(filename, append);
+// 		}
+// 		input = token + strlen(filename) + 1;
+// 	}
+// }
