@@ -64,25 +64,24 @@ int redirect_input(const char *filename) {
     return 0;
 }
 
-int redirect_output(const char *filename, int append) {
+int redirect_output(const char *filename, int append)
+{
     int fd;
-    if (append) {
+    if (append)
         fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    } else {
+    else
         fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    }
-
-    if (fd == -1) {
+    if (fd == -1)
+    {
         perror("open");
         return -1;
     }
-
-    if (dup2(fd, STDOUT_FILENO) == -1) {
+    if (dup2(fd, STDOUT_FILENO) == -1)
+    {
         perror("dup2");
         close(fd);
         return -1;
     }
-
     close(fd);
     return 0; // Return 0 on success
 }
@@ -99,14 +98,23 @@ void handle_redirection(Token *tokens, int token_count) {
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if (tokens[i].type == T_DGREAT) {
-            int fd = open(tokens[i+1].value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-            if (fd < 0) {
-                perror("Error opening file");
+        // else if (tokens[i].type == T_DGREAT) {
+        //     int fd = open(tokens[i+1].value, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        //     if (fd < 0) {
+        //         perror("Error opening file");
+        //         exit(1);
+        //     }
+        //     dup2(fd, STDOUT_FILENO);
+        //     close(fd);
+        // }
+        else if (tokens[i].type == T_DGREAT)
+        {
+            int fd = redirect_output(tokens[i+1].value, 1); // Set append flag to 1
+            if (fd == -1)
+            {
+                perror("Error redirecting output");
                 exit(1);
             }
-            dup2(fd, STDOUT_FILENO);
-            close(fd);
         }
         else if (tokens[i].type == T_RED_FROM) {
             int fd = open(tokens[i+1].value, O_RDONLY);

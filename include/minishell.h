@@ -64,7 +64,7 @@ int shell_echo(Token *args);
 // int		shell_echo(Token *args);
 int		shell_env(void);
 int     shell_exit(Token *args);
-int	shell_export(Token *args);
+int     shell_export(Token *args);
 int		shell_pwd(Token *argv);
 void	shell_unset(Token *args);
 int     shell_ls(Token tokens[], int token_count);
@@ -85,8 +85,8 @@ int 	print_error_msg_closing_curly(char *str);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 int	    ft_strcmp(char *str, char *in);
-void handle_redirection(Token *tokens, int token_count);
-void handle_heredoc(Token *tokens, int token_count);
+void    handle_redirection(Token *tokens, int token_count);
+void    handle_heredoc(Token *tokens, int token_count);
 // void handle_redirection(char *input);
 
 #endif

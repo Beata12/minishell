@@ -60,6 +60,7 @@ void print_token_info(Token *tokens, int token_count)
 		i++; // Increment counter
 	}
 }
+
 void execute_command(Token *tokens, int token_count)
 {
 	if (token_count > 0 && strcmp(tokens[0].value, "echo") == 0)
