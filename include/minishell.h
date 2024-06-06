@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/05 19:53:35 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:06:49 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 typedef struct s_args
 {
     int pipes;
+    int execution_result; //exit or no
     char **cmds;
     char **infiles;
     char **outfiles;

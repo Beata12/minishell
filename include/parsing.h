@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/05 19:57:30 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:05:29 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef enum e_token_types
 {
-	T_WORD = 0, // Word token
+	T_WORD, // Word token
 	T_RED_TO,   // Redirection to (>)
 	T_RED_FROM, // Redirection from (<)
 	T_DLESS,    // Here-document (<<)
@@ -27,12 +27,12 @@ typedef enum e_token_types
 	T_PIPE,     // Pipe (|)
 	T_QUOTE,    // Quote (single or double)
 	T_ERROR     // Error token
-}		t_token_types;
+}
 
 // Structure for tokens
 typedef struct
 {
-	char *value2;    // Use a pointer for dynamic allocation
+	char *value2;    // pointer for dynamic allocation
 	char value[256]; // Value of the token, assuming max length 256 characters
 	int	type;
 }		Token;
