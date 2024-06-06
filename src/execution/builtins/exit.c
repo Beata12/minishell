@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 09:39:42 by beata             #+#    #+#             */
-/*   Updated: 2024/06/06 09:43:32 by beata            ###   ########.fr       */
+/*   Created: 2024/05/23 09:58:42 by bmarek            #+#    #+#             */
+/*   Updated: 2024/06/06 11:00:12 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
-# include <ctype.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
+#include "../../../include/minishell.h"
+#include "../../../include/parsing.h"
 
-void ft_execute(char **cmds, char **env);
-
-#endif
+int shell_exit(Token *args)
+{
+    // Free memory allocated for each argument
+    if (args != NULL) {
+        for (int i = 0; args[i].value2 != NULL; i++) {
+            free(args[i].value2);
+        }
+        //free(args);
+    }
+    exit(0);
+}

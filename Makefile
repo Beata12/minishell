@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
+#    By: beata <beata@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/04 19:22:46 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/06/06 10:40:15 by beata            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,22 +17,30 @@ CC = gcc
 
 SRCS =  src/minishell.c \
 		src/util.c \
-		src/parsing.c \
-		src/lexical_parser.c \
-		src/rediraction.c \
+		src/parsing/parsing.c \
+		src/parsing/lexer.c \
+		src/parsing/rediraction.c \
 		src/special_char.c \
-		src/shell_commands/echo.c \
-		src/shell_commands/env.c \
-		src/shell_commands/cd.c \
-		src/shell_commands/exit.c \
-		src/shell_commands/pwd.c \
-		src/shell_commands/unset.c \
-		src/shell_commands/ls.c \
-		src/shell_commands/touch.c \
-		src/shell_commands/export.c \
-		src/shell_commands/rm.c \
-		src/shell_commands/mkdir.c \
-		src/shell_commands/clear.c \
+		src/execution/builtins/echo.c \
+		src/execution/builtins/env.c \
+		src/execution/builtins/cd.c \
+		src/execution/builtins/exit.c \
+		src/execution/builtins/pwd.c \
+		src/execution/builtins/unset.c \
+		src/execution/builtins/export.c \
+		src/execution/execution.c \
+		# src/shell_commands/echo.c \
+		# src/shell_commands/env.c \
+		# src/shell_commands/cd.c \
+		# src/shell_commands/exit.c \
+		# src/shell_commands/pwd.c \
+		# src/shell_commands/unset.c \
+		# src/shell_commands/ls.c \
+		# src/shell_commands/touch.c \
+		# src/shell_commands/export.c \
+		# src/shell_commands/rm.c \
+		# src/shell_commands/mkdir.c \
+		# src/shell_commands/clear.c \
 #src/shell_commands/export.c
 
 LIBFTFOLDER = Libft

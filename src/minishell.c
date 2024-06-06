@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/05 19:41:16 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:29:52 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/parsing.h"
+#include "../include/execution.h"
 
 int g_exit_status;
 // Signal handlers
@@ -75,42 +76,87 @@ char **split_input(char *input)
 	return args;
 }
 
-// Function to find the full path of an executable
-char *find_executable(char *command)
+void display_prompt(char **env)
 {
-	char *path = getenv("PATH");
-	char *token;
-	char full_path[1024];
+	char *input;
+	char **cmds;
+	load_history();
 
-	// If the command is an absolute or relative path, return it directly
-	if (strchr(command, '/') != NULL)
-		return command;
-
-	// Search for the command in the PATH directories
-	token = strtok(path, ":");
-	while (token != NULL)
-	{
-		full_path[0] = '\0';
-		strcat(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, command);
-
-		if (access(full_path, X_OK) == 0)
+	// Register SIGINT handler
+	// signal(SIGINT, sigint_handler);
+	
+	 while (1) {
+	// while (!sigint_received)
+	// {
+		input = readline("minishell> ");
+		if (!input)
 		{
-			char *executable = malloc(strlen(full_path) + 1);
-			strcpy(executable, full_path);
-			return executable;
+			printf("exit\n");
+			break;
 		}
-		token = strtok(NULL, ":");
+		if (!*input)
+			continue;
+		// if (check_str(input) != 0)
+		// 	error_str();
+		else
+			// handle_redirection(input);
+			// parser(input);
+			cmds = ft_split(input, '|'); // parse the input
+			ft_execute(cmds, env);
+		free(input);
 	}
-	return NULL;
+	save_history();
 }
-int ft_newline(char **av)
+
+int main(int argc, char **argv, char **env)
 {
-	(void)av;
-	printf("\n");
-	return (0);
+	if (!argc && !argv)
+		return (0);
+	g_exit_status = 0;
+	ft_printf("Welcome to minishell!\n");
+	setup_signal_handlers();
+	display_prompt(env);
+	return g_exit_status;
 }
+
+
+
+// // Function to find the full path of an executable
+// char *find_executable(char *command)
+// {
+// 	char *path = getenv("PATH");
+// 	char *token;
+// 	char full_path[1024];
+
+// 	// If the command is an absolute or relative path, return it directly
+// 	if (strchr(command, '/') != NULL)
+// 		return command;
+
+// 	// Search for the command in the PATH directories
+// 	token = strtok(path, ":");
+// 	while (token != NULL)
+// 	{
+// 		full_path[0] = '\0';
+// 		strcat(full_path, token);
+// 		strcat(full_path, "/");
+// 		strcat(full_path, command);
+
+// 		if (access(full_path, X_OK) == 0)
+// 		{
+// 			char *executable = malloc(strlen(full_path) + 1);
+// 			strcpy(executable, full_path);
+// 			return executable;
+// 		}
+// 		token = strtok(NULL, ":");
+// 	}
+// 	return NULL;
+// }
+// int ft_newline(char **av)
+// {
+// 	(void)av;
+// 	printf("\n");
+// 	return (0);
+// }
 // int ft_execvp(const char *args, char **argv)
 // {
 // 	if (my_strcmp(args, "e") == 0)
@@ -169,172 +215,124 @@ int ft_newline(char **av)
 // 	free(executable);
 // }
 
-void error_str(void)
-{
-	g_exit_status = 258;
-}
+// void error_str(void)
+// {
+// 	g_exit_status = 258;
+// }
+
+// char	*find_path(char *cmd, char *path)
+// {
+// 	char	*c;
+// 	char	*tmp;
+// 	char	**paths;
+// 	int		i;
+// 	int		fd;
+
+// 	i = 0;
+// 	paths = ft_split(path, ':');
+// 	while (paths[i] != NULL)
+// 	{
+// 		tmp = ft_strjoin(paths[i], "/");
+// 		c = ft_strjoin(tmp, cmd);
+// 		free(tmp);
+// 		fd = open(c, O_RDONLY);
+// 		if (fd != -1)
+// 		{
+// 			close(fd);
+// 			return (c);
+// 		}
+// 		free(c);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
+
+// void ft_exe(char *cmd, char **env);
+
+// void ft_execute(char **cmds, char **env)
+// {
+// 	int fd[2];
+// 	pid_t pid;
+// 	int i = 0;
+// 	int pipes = 0 ;
+// 	while(cmds[i] != NULL)
+// 	{
+// 		i++;
+// 		pipes++;
+// 	}
+// 	i = 0;
+// 	while (i < pipes)
+// 	{
+// 		pipe(fd);
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			if (i != 0)
+// 			{
+// 				dup2(fd[0], 0);
+// 				close(fd[0]);
+// 			}
+// 			if (cmds[i + 1] != NULL)
+// 				dup2(fd[1], 1);
+// 			//Beqa
+// 			//heardoc
+// 			// open_input_files(args->input_files);
+// 			// open_output_files(args->output_files);
+// 			// close(fd[1]);
+// 			ft_exe(cmds[i], env);
+// 			exit(0);
+// 		}
+// 		else
+// 		{
+// 			waitpid(pid, NULL, 0);
+// 			close (fd[0]);
+// 			close(fd[1]);
+// 			fd[0] = fd[0];
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void execute(char *input, char **env);
+// void ft_exe(char *cmd, char **env)
+// {
+// 	if (ft_strncmp(cmd, "cd", 2) == 0)
+// 		printf("cd\n");
+// 	else if (ft_strncmp(cmd, "echo", 4) == 0)
+// 		printf("echo\n");
+// 	else if (ft_strncmp(cmd, "env", 3) == 0)
+// 		printf("env\n");
+// 	else if (ft_strncmp(cmd, "exit", 4)	== 0)
+// 		printf("exit\n");
+// 	else if (ft_strncmp(cmd, "export", 6) == 0)
+// 		printf("export\n");
+// 	else if (ft_strncmp(cmd, "pwd", 3)	== 0)
+// 		printf("pwd\n");
+// 	else if (ft_strncmp(cmd, "unset", 5) == 0)
+// 		printf("unset\n");
+// 	else
+// 		execute(cmd, env);
+// }
 
 
-
-
-
-char	*find_path(char *cmd, char *path)
-{
-	char	*c;
-	char	*tmp;
-	char	**paths;
-	int		i;
-	int		fd;
-
-	i = 0;
-	paths = ft_split(path, ':');
-	while (paths[i] != NULL)
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		c = ft_strjoin(tmp, cmd);
-		free(tmp);
-		fd = open(c, O_RDONLY);
-		if (fd != -1)
-		{
-			close(fd);
-			return (c);
-		}
-		free(c);
-		i++;
-	}
-	return (NULL);
-}
-void ft_exe(char *cmd, char **env);
-
-
-
-void ft_execute(char **cmds, char **env, t_args *args)
-{
-	int fd[2];
-	pid_t pid;
-	int i = 0;
-	int pipes = 0 ;
-	while(cmds[i] != NULL)
-	{
-		i++;
-		pipes++;
-	}
-	i = 0;
-
-	while (i < pipes)
-	{
-		pipe(fd);
-		pid = fork();
-		if (pid == 0)
-		{
-			if (i != 0)
-			{
-				dup2(fd[0], 0);
-				close(fd[0]);
-			}
-			if (cmds[i + 1] != NULL)
-				dup2(fd[1], 1);
-			//Beqa
-			//heardoc
-			// open_input_files(args->input_files);
-			// open_output_files(args->output_files);
-			// close(fd[1]);
-			// ft_exe(cmds[i], env);
-			exit(0);
-		}
-		else
-		{
-			waitpid(pid, NULL, 0);
-			close (fd[0]);
-			close(fd[1]);
-			fd[0] = fd[0];
-		}
-		i++;
-	}
-};
-void execute(char *input, char **env);
-void ft_exe(char *cmd, char **env)
-{
-	if (ft_strncmp(cmd, "cd", 2) == 0)
-		printf("cd\n");
-	else if (ft_strncmp(cmd, "echo", 4) == 0)
-		printf("echo\n");
-	else if (ft_strncmp(cmd, "env", 3) == 0)
-		printf("env\n");
-	else if (ft_strncmp(cmd, "exit", 4)	== 0)
-		printf("exit\n");
-	else if (ft_strncmp(cmd, "export", 6) == 0)
-		printf("export\n");
-	else if (ft_strncmp(cmd, "pwd", 3)	== 0)
-		printf("pwd\n");
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
-		printf("unset\n");
-	else
-		execute(cmd, env);
-}
-
-
-void execute(char *input, char **env)
-{
-	char **cmds = ft_split(input, ' ');
-	int i = 0;
-	while(ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	char *tmp = env[i];
-	if (ft_strchr(cmds[0], '/') != NULL)
-	{
-		execve(cmds[0], cmds, env);
-	}
-	char *path = find_path(cmds[0], tmp);
-	if (path == NULL)
-	{
-		printf("Command not found\n");
-		exit(0);
-	}
-	execve(path, cmds, env);
-	free(path);
-	exit(0);
-}
-
-void display_prompt(char **env)
-{
-	char *input;
-	char **cmds;
-	load_history();
-
-	// Register SIGINT handler
-	// signal(SIGINT, sigint_handler);
-	
-	 while (1) {
-	// while (!sigint_received)
-	// {
-		input = readline("minishell> ");
-		if (!input)
-		{
-			printf("exit\n");
-			break;
-		}
-		if (!*input)
-			continue;
-		// if (check_str(input) != 0)
-		// 	error_str();
-		else
-			// handle_redirection(input);
-			parser(input);
-			// cmds = ft_split(input, '|'); // parse the input
-			// ft_execute(cmds, env);
-		free(input);
-	}
-	save_history();
-}
-
-int main(int argc, char **argv, char **env)
-{
-	if (!argc && !argv)
-		return (0);
-	g_exit_status = 0;
-	ft_printf("Welcome to minishell!\n");
-	setup_signal_handlers();
-	display_prompt(env);
-	return g_exit_status;
-}
+// void execute(char *input, char **env)
+// {
+// 	char **cmds = ft_split(input, ' ');
+// 	int i = 0;
+// 	while(ft_strncmp(env[i], "PATH=", 5) != 0)
+// 		i++;
+// 	char *tmp = env[i];
+// 	if (ft_strchr(cmds[0], '/') != NULL)
+// 	{
+// 		execve(cmds[0], cmds, env);
+// 	}
+// 	char *path = find_path(cmds[0], tmp);
+// 	if (path == NULL)
+// 	{
+// 		printf("Command not found\n");
+// 		exit(0);
+// 	}
+// 	execve(path, cmds, env);
+// 	free(path);
+// 	exit(0);
+// }
