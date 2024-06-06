@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/06 14:35:35 by aneekhra         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/06 15:47:00 by beata            ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Created: 2024/06/06 16:42:00 by aneekhra          #+#    #+#             */
+/*   Updated: 2024/06/06 16:44:33 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +18,7 @@
 
 typedef enum e_token_types
 {
-	T_WORD, // Word token
+	T_WORD,     // Word token
 	T_RED_TO,   // Redirection to (>)
 	T_RED_FROM, // Redirection from (<)
 	T_DLESS,    // Here-document (<<)
@@ -30,34 +26,34 @@ typedef enum e_token_types
 	T_PIPE,     // Pipe (|)
 	T_QUOTE,    // Quote (single or double)
 	T_ERROR     // Error token
-}
+};
 
 // Structure for tokens
 typedef struct
 {
 	char *value2;    // pointer for dynamic allocation
 	char value[256]; // Value of the token, assuming max length 256 characters
-	int	type;
-}		Token;
+	int		type;
+}			Token;
 
 typedef struct s_args
 {
-    int pipes;
-    int execution_result; //exit or no
-    char **cmds;
-    char **infiles;
-    char **outfiles;
-    t_list *env;
-    
-} t_args;
+	int		pipes;
+	int execution_result; // exit or no
+	char	**cmds;
+	char	**infiles;
+	char	**outfiles;
+	// t_list *env;
 
-void	handleWord(const char **ptr, Token *tokens, int *token_count);
-void	handleQuote(const char **ptr, Token *tokens, int *token_count);
-void	handlePipe(const char **ptr, Token *tokens, int *token_count);
-void	handleSpecial(const char **ptr);
-int		lex(const char *input, Token *tokens);
-void	print_token_info(Token *tokens, int token_count);
-void	parser(char *input_command);
+}			t_args;
+
+void		handleWord(const char **ptr, Token *tokens, int *token_count);
+void		handleQuote(const char **ptr, Token *tokens, int *token_count);
+void		handlePipe(const char **ptr, Token *tokens, int *token_count);
+void		handleSpecial(const char **ptr);
+int			lex(const char *input, Token *tokens);
+void		print_token_info(Token *tokens, int token_count);
+void		parser(char *input_command);
 
 #endif
 
