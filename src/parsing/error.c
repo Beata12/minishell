@@ -6,11 +6,49 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:41:15 by beata             #+#    #+#             */
-/*   Updated: 2024/06/06 15:25:18 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:00:39 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef PARSING_H
+# define PARSING_H
+# include <ctype.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+
+typedef enum e_token_types
+{
+	T_WORD, // Word token
+	T_RED_TO,   // Redirection to (>)
+	T_RED_FROM, // Redirection from (<)
+	T_DLESS,    // Here-document (<<)
+	T_DGREAT,   // Append (>>)
+	T_PIPE,     // Pipe (|)
+	T_QUOTE,    // Quote (single or double)
+	T_ERROR     // Error token
+}       t_token_types;
+
+// Structure for tokens
+typedef struct
+{
+	char *value2;    // pointer for dynamic allocation
+	char value[256]; // Value of the token, assuming max length 256 characters
+	int	type;
+}		Token;
+
+typedef struct s_args
+{
+    int pipes;
+    int execution_result; //exit or no
+    char **cmds;
+    char **infiles;
+    char **outfiles;
+    // t_list *env;
+    
+}       t_args;
+
+#endif
 
 int is_whitespace(char c)
 {
@@ -63,16 +101,31 @@ int unvalid_quotes(char *input_string)
     return (0);
 }
 
-// int unvalid_symbols (char *input_string)
-// {
-//     char quote_status;
+int track_quote_type(char input_string)
+{}
 
-//     quote_status = '\0';
-//     while (*input_string)
-//     {
-        
-//     }
-// }
+void is_open_quote (char input_string, char *quote_flag)
+{
+    if ((track_quote_type(input_string)) && !*quote_flag)
+        *quote_flag = input_string;
+    else if ((track_quote_type(input_string)) && *quote_flag == input_string)
+        *quote_flag = '\0';
+}
+
+int unvalid_symbols (char *input_string)
+{
+    char quote_status;
+
+    quote_status = '\0';
+    while (*input_string)
+    {
+        is_open_quote(*input_string, &quote_status);
+        if ((*input_string == '&' || *input_string == ';' || *input_string == '\\') && !quote_status)
+            return (*input_string);
+        input_string++;
+    }
+    return (0);
+}
 
 int wrong_input(t_args *shell_data, char *input)
 {
@@ -96,4 +149,28 @@ int wrong_input(t_args *shell_data, char *input)
     else
         return (0);
     return (1);
+}
+
+int main(int argc, char **argv)
+{
+    t_args shell_data; // Deklaracja zmiennej shell_data typu t_args
+
+    if (argc > 1)
+    {
+        if (wrong_input(&shell_data, argv[1]))
+        {
+            printf("Podano nieprawidłowy argument.\n");
+            return 1;
+        }
+        else
+        {
+            printf("Argument został przetworzony poprawnie.\n");
+        }
+    }
+    else
+    {
+        printf("Brak argumentu. Użycie: %s <argument>\n", argv[0]); 
+        return 1;
+    }
+    return 0;
 }
