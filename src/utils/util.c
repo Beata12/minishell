@@ -6,11 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:27:41 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/05 18:54:39 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:43:20 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	my_strcmp(const char *s1, const char *s2)
 {
@@ -50,14 +50,14 @@ char	*ft_strnstr(char *haystack, char *needle, size_t len)
 
 	i = 0;
 	j = 0;
-	if (needle [j] == '\0')
+	if (needle[j] == '\0')
 		return ((char *)haystack);
 	if (len == 0)
 		return (NULL);
 	while (haystack[i] != '\0' && len != 0)
 	{
-		while (haystack[i + j] == needle[j]
-			&& haystack [i + j] != '\0' && (i + j) < len)
+		while (haystack[i + j] == needle[j] && haystack[i + j] != '\0' && (i
+				+ j) < len)
 		{
 			j++;
 		}

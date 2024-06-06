@@ -3,51 +3,40 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: beata <beata@student.42.fr>                +#+  +:+       +#+         #
+#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/06 10:40:15 by beata            ###   ########.fr        #
+#    Updated: 2024/06/06 15:48:33 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-CC = gcc
-#CFLAGS = -Wall -Wextra -Werror -Iinclude
-#  CFLAGS += -fsanitize=memory
-
-SRCS =  src/minishell.c \
-		src/util.c \
-		src/parsing/parsing.c \
-		src/parsing/lexer.c \
-		src/parsing/rediraction.c \
-		src/special_char.c \
-		src/execution/builtins/echo.c \
-		src/execution/builtins/env.c \
-		src/execution/builtins/cd.c \
-		src/execution/builtins/exit.c \
-		src/execution/builtins/pwd.c \
-		src/execution/builtins/unset.c \
-		src/execution/builtins/export.c \
-		src/execution/execution.c \
-		# src/shell_commands/echo.c \
-		# src/shell_commands/env.c \
-		# src/shell_commands/cd.c \
-		# src/shell_commands/exit.c \
-		# src/shell_commands/pwd.c \
-		# src/shell_commands/unset.c \
-		# src/shell_commands/ls.c \
-		# src/shell_commands/touch.c \
-		# src/shell_commands/export.c \
-		# src/shell_commands/rm.c \
-		# src/shell_commands/mkdir.c \
-		# src/shell_commands/clear.c \
-#src/shell_commands/export.c
+NAME 		= minishell
+CC 			= cc
+#CFLAGS 		= -Wall -Wextra -Werror -Iinclude
 
 LIBFTFOLDER = Libft
+LIBFT 		= $(LIBFTFOLDER)/libft.a
 
-LIBFT = $(LIBFTFOLDER)/libft.a
+#  CFLAGS += -fsanitize=memory
 
-OBJS = $(SRCS:.c=.o)
+SRCS 	=  	minishell.c \
+			src/utils/util.c \
+			src/parsing/parsing.c \
+			src/parsing/lexer.c \
+			src/parsing/rediraction.c \
+			src/execution/builtins/echo.c \
+			src/execution/builtins/env.c \
+			src/execution/builtins/cd.c \
+			src/execution/builtins/exit.c \
+			src/execution/builtins/pwd.c \
+			src/execution/builtins/unset.c \
+			src/execution/builtins/export.c \
+			src/execution/execution.c \
+			src/utils/special_char.c \
+			src/utils/signal.c \
+
+
+OBJS 	= $(SRCS:.c=.o)
 
 # Color definitions
 GREEN = \033[0;32m
@@ -60,6 +49,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+#clear
 	@echo "${GREEN}✅ $(NAME) Compilation completed successfully! ✅${ENDCOLOR}"
 	
 $(LIBFT):

@@ -6,16 +6,15 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/05 19:57:30 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:35:35 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-# include <ctype.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
+
+# include "execution.h"
+# include "minishell.h"
 
 typedef enum e_token_types
 {
@@ -42,6 +41,8 @@ void	handleQuote(const char **ptr, Token *tokens, int *token_count);
 void	handlePipe(const char **ptr, Token *tokens, int *token_count);
 void	handleSpecial(const char **ptr);
 int		lex(const char *input, Token *tokens);
+void	print_token_info(Token *tokens, int token_count);
+void	parser(char *input_command);
 
 #endif
 

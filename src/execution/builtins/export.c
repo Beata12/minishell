@@ -3,41 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:45 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 10:42:22 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 15:25:55 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int shell_export(Token *args)
+int	shell_export(Token *args)
 {
-    int i = 1;
-    char *key;
-    char *value;
+	int		i;
+	char	*key;
+	char	*value;
 
-    while (args[i].value[0] != '\0') {
-        key = strtok(args[i].value, "=");
-        value = strtok(NULL, "=");
-
-        if (key && value) {
-            if (setenv(key, value, 1) != 0) {
-                perror("export");
-                return 1;
-            }
-        } else {
-            fprintf(stderr, "export: invalid format\n");
-            return 1;
-        }
-        i++;
-    }
-    return 0;
+	i = 1;
+	while (args[i].value[0] != '\0')
+	{
+		key = strtok(args[i].value, "=");
+		value = strtok(NULL, "=");
+		if (key && value)
+		{
+			if (setenv(key, value, 1) != 0)
+			{
+				perror("export");
+				return (1);
+			}
+		}
+		else
+		{
+			fprintf(stderr, "export: invalid format\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
-
-
-
 
 // void shell_export(Token *args) {
 //     extern char **environ;
@@ -55,8 +57,8 @@ int shell_export(Token *args)
 //         if (name && value) {
 //             // Check for invalid name format (optional)
 //             if (strcspn(name, " \t\n=") != strlen(name)) {
-//                 fprintf(stderr, "minishell: export: invalid variable name\n");
-//                 return;
+//                 fprintf(stderr,"minishell: export: invalid variable name\n");
+//                 return ;
 //             }
 
 //             // Find if the variable already exists
@@ -90,72 +92,72 @@ int shell_export(Token *args)
 //     }
 // }
 
-
 // {
-//	 char *equals = strchr(arg, '=');
+//		char *equals = strchr(arg, '=');
 
-//	 if (!equals)
+//		if (!equals)
 // 	{
-//		 fprintf(stderr, "Invalid argument format: %s\n", arg);
-//		 return 1;
-//	 }
-//	 *equals = '\0';  // Splitting the argument into variable name and value
-//	 int result = setenv(arg, equals + 1, 1); // Setting the environment variable
-//	 if (result != 0)
+//			fprintf(stderr, "Invalid argument format: %s\n", arg);
+//			return (1);
+//		}
+//		*equals = '\0';  // Splitting the argument into variable name and value
+//		int result = setenv(arg, equals + 1, 1);
+// Setting the environment variable
+//		if (result != 0)
 // 	{
-//		 perror("setenv");
-//		 return 1;
-//	 }
-//	 return 0;
+//			perror("setenv");
+//			return (1);
+//		}
+//		return (0);
 // }
 
 // int main(int argc, char *argv[])
 // {
-//	 int result = shell_export(argv[1]);
+//		int result = shell_export(argv[1]);
 
-//	 if (argc != 2)
+//		if (argc != 2)
 // 	{
-//		 fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
-//		 return 1;
-//	 }
-//	 if (result != 0)
+//			fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
+//			return (1);
+//		}
+//		if (result != 0)
 // 	{
-//		 fprintf(stderr, "Error: Failed to export variable\n");
-//		 return 1;
-//	 }
-//	 printf("Variable exported successfully\n");
-//	 return 0;
+//			fprintf(stderr, "Error: Failed to export variable\n");
+//			return (1);
+//		}
+//		printf("Variable exported successfully\n");
+//		return (0);
 // }
 
 //	check like this:
 //	./a.out MY_VAR=my_value
 
 // int shell_export(char **args) {
-//	 if (!args[1])
+//		if (!args[1])
 // 	{
-//		 fprintf(stderr, "export: missing argument\n");
-//		 return 1;
-//	 }
-//	 if (putenv(args[1]) != 0)
+//			fprintf(stderr, "export: missing argument\n");
+//			return (1);
+//		}
+//		if (putenv(args[1]) != 0)
 // 	{
-//		 perror("export");
-//		 return 1;
-//	 }
-//	 return 0;
+//			perror("export");
+//			return (1);
+//		}
+//		return (0);
 // }
 
-// int main(int argc, char *argv[]) 
+// int main(int argc, char *argv[])
 // {
-//	 int result = shell_export(&argv[1]);
+//		int result = shell_export(&argv[1]);
 
-//	 if (argc != 2) {
-//		 fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
-//		 exit(1);
-//	 }
-//	 if (result != 0) {
-//		 fprintf(stderr, "Error: Failed to export variable\n");
-//		 exit(1);
-//	 }
-//	 printf("Variable exported successfully\n");
-//	 return 0;
+//		if (argc != 2) {
+//			fprintf(stderr, "Usage: %s <variable=value>\n", argv[0]);
+//			exit(1);
+//		}
+//		if (result != 0) {
+//			fprintf(stderr, "Error: Failed to export variable\n");
+//			exit(1);
+//		}
+//		printf("Variable exported successfully\n");
+//		return (0);
 // }

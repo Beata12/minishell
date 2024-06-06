@@ -3,69 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 10:29:52 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:02:09 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/parsing.h"
-#include "../include/execution.h"
+#include "include/execution.h"
+#include "include/minishell.h"
+#include "include/parsing.h"
 
-int g_exit_status;
-// Signal handlers
-void handle_sigint(int sig)
+char	**split_input(char *input)
 {
-	g_exit_status = 130;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	char	*arg;
+	int		position;
+	char	**args;
 
-	if (sig == SIGTSTP || sig == SIGQUIT)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void handle_sigquit(int sig)
-{
-	(void)sig;
-	// Do nothing on Ctrl-
-}
-
-void setup_signal_handlers(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = handle_sigint;
-	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	rl_catch_signals = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGTSTP, &sa, NULL);
-}
-
-void load_history(void)
-{
-	read_history(HISTORY_FILE);
-}
-
-void save_history(void)
-{
-	write_history(HISTORY_FILE);
-}
-
-char **split_input(char *input)
-{
-	char **args = malloc(64 * sizeof(char*)); // Allocate space for 64 arguments
-	char *arg;
-	int position = 0;
-
+	args = malloc(64 * sizeof(char *));
+	// Allocate space for 64 arguments
+	position = 0;
 	arg = strtok(input, " "); // Split input by spaces
 	while (arg != NULL)
 	{
@@ -73,53 +30,56 @@ char **split_input(char *input)
 		arg = strtok(NULL, " ");
 	}
 	args[position] = NULL; // Null-terminate the array of arguments
-	return args;
+	return (args);
 }
 
-void display_prompt(char **env)
+void	display_prompt(char **env)
 {
-	char *input;
-	char **cmds;
-	load_history();
+	char	*input;
 
-	// Register SIGINT handler
-	// signal(SIGINT, sigint_handler);
-	
-	 while (1) {
-	// while (!sigint_received)
-	// {
+	// char	**cmds;
+	(void)env;
+	load_history();
+	while (1)
+	{
 		input = readline("minishell> ");
 		if (!input)
 		{
 			printf("exit\n");
-			break;
+			break ;
 		}
+		if (*input)
+			add_history(input);
 		if (!*input)
-			continue;
+			continue ;
 		// if (check_str(input) != 0)
 		// 	error_str();
 		else
 			// handle_redirection(input);
-			// parser(input);
-			cmds = ft_split(input, '|'); // parse the input
-			ft_execute(cmds, env);
+			parser(input);
+		// cmds = ft_split(input, '|'); // parse the input
+		// ft_execute(cmds, env);
 		free(input);
 	}
 	save_history();
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
+	int	g_exit_status;
+
 	if (!argc && !argv)
 		return (0);
+	if (argc != 1)
+	{
+		exit(write(1, RED "	No arguments accepted!	\n" RE, 32));
+	}
 	g_exit_status = 0;
-	ft_printf("Welcome to minishell!\n");
+	ft_printf(BLUE " 	WELCOME TO MINISHELL!		\n" RE);
 	setup_signal_handlers();
 	display_prompt(env);
-	return g_exit_status;
+	return (g_exit_status);
 }
-
-
 
 // // Function to find the full path of an executable
 // char *find_executable(char *command)
@@ -128,9 +88,9 @@ int main(int argc, char **argv, char **env)
 // 	char *token;
 // 	char full_path[1024];
 
-// 	// If the command is an absolute or relative path, return it directly
+// 	// If the command is an absolute or relative path,  return it directly
 // 	if (strchr(command, '/') != NULL)
-// 		return command;
+// 		return (command);
 
 // 	// Search for the command in the PATH directories
 // 	token = strtok(path, ":");
@@ -145,11 +105,11 @@ int main(int argc, char **argv, char **env)
 // 		{
 // 			char *executable = malloc(strlen(full_path) + 1);
 // 			strcpy(executable, full_path);
-// 			return executable;
+// 			return (executable);
 // 		}
 // 		token = strtok(NULL, ":");
 // 	}
-// 	return NULL;
+// 	return (NULL);
 // }
 // int ft_newline(char **av)
 // {
@@ -173,7 +133,7 @@ int main(int argc, char **argv, char **env)
 // 	// 	{shell_unset(argv);
 // 	// 	return (0);}
 // 	// else if (my_strcmp(args, "\n") == 0)
-// 	// 	return ft_newline(argv);
+// 	// 	return (ft_newline(argv));
 // 	else
 // 		printf("command not found\n");
 // 	return (0);
@@ -188,7 +148,7 @@ int main(int argc, char **argv, char **env)
 // 	if (executable == NULL)
 // 	{
 // 		printf("minishell: command not found: %s\n", command);
-// 		return;
+// 		return ;
 // 	}
 
 // 	pid_t pid = fork();
@@ -211,7 +171,7 @@ int main(int argc, char **argv, char **env)
 // 		int status;
 // 		waitpid(pid, &status, 0);
 // 	}
-//p0\ 	// Free the allocated memory for the executable path if it was duplicated]
+// p0\ 	// Free the allocated memory for the executable path if it was duplicated]
 // 	free(executable);
 // }
 
@@ -313,7 +273,6 @@ int main(int argc, char **argv, char **env)
 // 	else
 // 		execute(cmd, env);
 // }
-
 
 // void execute(char *input, char **env)
 // {

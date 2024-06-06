@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:56 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 10:42:29 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 15:23:59 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 #include "../../../include/parsing.h"
 
-int shell_pwd(Token *argv)
+int	shell_pwd(Token *argv)
 {
+	char	*cwd;
+
 	if (argv == NULL)
 		return (0);
-	char *cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
 		perror("getcwd() error");
@@ -43,6 +45,6 @@ int shell_pwd(Token *argv)
 //     if(token_count > 0 && strcmp(tokens[0].value, "pwd") == 0)
 // 		shell_pwd(tokens);
 // 	else// Placeholder for parsing other commands
-// 		return;
+// 		return ;
 // 		// printf("Other command parsing is not implemented yet.\n");
 // }
