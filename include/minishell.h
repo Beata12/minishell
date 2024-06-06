@@ -33,14 +33,14 @@
 #include "parsing.h"
 
 #define HISTORY_FILE ".minishell_history"
-extern char **environ;
+// extern char **environ;
 
-
-typedef struct s_list
-{
-    char *content;
-    struct s_list *next;
-} t_list;
+//Beqa
+// typedef struct s_list
+// {
+//     char *content;
+//     struct s_list *next;
+// } t_list;
 
 
 typedef struct s_args

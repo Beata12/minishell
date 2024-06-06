@@ -165,7 +165,7 @@ int ft_newline(char **av)
 // 		int status;
 // 		waitpid(pid, &status, 0);
 // 	}
-// 	// Free the allocated memory for the executable path if it was duplicated
+//p0\ 	// Free the allocated memory for the executable path if it was duplicated]
 // 	free(executable);
 // }
 
@@ -234,11 +234,12 @@ void ft_execute(char **cmds, char **env, t_args *args)
 			}
 			if (cmds[i + 1] != NULL)
 				dup2(fd[1], 1);
+			//Beqa
 			//heardoc
-			open_input_files(args->input_files);
-			open_output_files(args->output_files);
-			close(fd[1]);
-			ft_exe(cmds[i], env);
+			// open_input_files(args->input_files);
+			// open_output_files(args->output_files);
+			// close(fd[1]);
+			// ft_exe(cmds[i], env);
 			exit(0);
 		}
 		else
@@ -250,9 +251,8 @@ void ft_execute(char **cmds, char **env, t_args *args)
 		}
 		i++;
 	}
-}
+};
 void execute(char *input, char **env);
-
 void ft_exe(char *cmd, char **env)
 {
 	if (ft_strncmp(cmd, "cd", 2) == 0)
