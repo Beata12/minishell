@@ -6,7 +6,7 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:41:15 by beata             #+#    #+#             */
-/*   Updated: 2024/06/06 16:00:39 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:09:44 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,26 +151,54 @@ int wrong_input(t_args *shell_data, char *input)
     return (1);
 }
 
-int main(int argc, char **argv)
-{
-    t_args shell_data; // Deklaracja zmiennej shell_data typu t_args
+// int main(int argc, char **argv)
+// {
+//     t_args shell_data; // Deklaracja zmiennej shell_data typu t_args
 
-    if (argc > 1)
-    {
-        if (wrong_input(&shell_data, argv[1]))
-        {
-            printf("Podano nieprawidłowy argument.\n");
-            return 1;
-        }
-        else
-        {
-            printf("Argument został przetworzony poprawnie.\n");
-        }
-    }
-    else
-    {
-        printf("Brak argumentu. Użycie: %s <argument>\n", argv[0]); 
-        return 1;
-    }
-    return 0;
-}
+//     if (argc > 1)
+//     {
+//         if (wrong_input(&shell_data, argv[1]))
+//         {
+//             printf("Podano nieprawidłowy argument.\n");
+//             return 1;
+//         }
+//         else
+//             printf("Argument został przetworzony poprawnie.\n");
+//     }
+//     else
+//     {
+//         printf("Brak argumentu. Użycie: %s <argument>\n", argv[0]); 
+//         return 1;
+//     }
+//     return 0;
+// }
+
+// int parse_input (char *input)
+// {
+//     t_args shell_data;
+
+//     if (wrong_input(&shell_data, input))
+// 		return (0);
+//     return (1);
+// }
+
+// int main(int argc, char **argv)
+// {
+//     if (argc > 1)
+//     {
+//         if (parse_input(argv[1]))
+//         {
+//             printf("Podano nieprawidłowy argument.\n");
+//             return 1;
+//         }
+//         else
+//             printf("Argument został przetworzony poprawnie.\n");
+//     }
+//     else
+//     {
+//         printf("Brak argumentu. Użycie: %s <argument>\n", argv[0]); 
+//         return 1;
+//     }
+//     return 0;
+// }
+

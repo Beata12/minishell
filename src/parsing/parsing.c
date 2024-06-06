@@ -6,7 +6,7 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:52:34 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 12:42:30 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:10:05 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int parse_input (char *input)
 	if (wrong_input(input))
 		return (0);
 }
+
 // Function to parse the command
 // void parser(char *input_command)
 // {
