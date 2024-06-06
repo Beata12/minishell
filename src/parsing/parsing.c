@@ -6,7 +6,11 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:52:34 by bmarek            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/06 14:56:44 by aneekhra         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/06 16:10:05 by beata            ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +89,12 @@ void	print_token_info(Token *tokens, int token_count)
 		printf(", value: %s\n", tokens[i].value); // Print token value
 		i++;                                      // Increment counter
 	}
+}
+
+int parse_input (char *input)
+{
+	if (wrong_input(input))
+		return (0);
 }
 
 // Function to parse the command

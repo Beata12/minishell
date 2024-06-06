@@ -6,7 +6,22 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:53:07 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 10:15:57 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/06 12:38:31 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+t_token_types token_type(char *token)
+{
+    if (*token == '|')
+        return(T_PIPE);
+    else if (*token == '<')
+        return (T_RED_FROM);
+    else if (*token == '>')
+        return (T_RED_TO)
+    else if (*token == *(token + 1) && *token == '<')
+        return (T_DLESS)
+    else if (*token == *(token + 1) && *token == '>')
+        return (T_DGREAT)
+    else
+        return (T_WORD);
+}

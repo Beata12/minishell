@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:15:07 by aneekhra          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/06 15:55:45 by aneekhra         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/06 13:06:49 by beata            ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +57,7 @@
 
 typedef struct s_args
 {
+<<<<<<< HEAD
 	int		pipes;
 	char	**cmds;
 	char	**infiles;
@@ -60,6 +65,16 @@ typedef struct s_args
 	t_list	*env;
 
 }			t_args;
+=======
+    int pipes;
+    int execution_result; //exit or no
+    char **cmds;
+    char **infiles;
+    char **outfiles;
+    t_list *env;
+    
+} t_args;
+>>>>>>> refs/remotes/origin/main
 
 // Global variables
 
