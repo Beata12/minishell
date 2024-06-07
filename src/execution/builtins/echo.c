@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 15:23:16 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:46:18 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*expand_variable(const char *str)
 {
-		const char *var_name = str + 1;
-	char	*value;
+	const char	*var_name = str + 1;
+	char		*value;
 
 	if (str[0] == '$')
 	{
