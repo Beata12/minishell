@@ -6,7 +6,7 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:54:25 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/06 10:22:09 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/07 12:22:11 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_str(char *input)
 			return (print_error_msg_pipe(input));
 		else if (input[i] == '&')
 			return (print_error_msg_ampresent(input));
-		else if (input[i] == ')')
+		else if (input[i] == '(')
 			return (print_error_msg_closing_brace(input));
 		else if (input[i] == ']')
 			return (print_error_msg_closing_square(input));

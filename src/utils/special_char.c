@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:58:35 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 14:45:35 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:09:10 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ int	print_error_msg_pipe(char *str)
 			{
 				if (ft_strnstr(str, "||", ft_strlen(str)) != NULL)
 					ft_putstr_fd("minishell: \
-syntax error near unexpected token '||' \n",
-									2);
+						syntax error near unexpected token '||' \n", 2);
 				else if (ft_strnstr(str, "|", ft_strlen(str)) != NULL)
 					ft_putstr_fd("minishell: \
-syntax error near unexpected token '|' \n",
-									2);
+						syntax error near unexpected token '|' \n", 2);
 				return (1);
 			}
 			dif = 0;
@@ -61,12 +59,10 @@ int	print_error_msg_ampresent(char *str)
 			{
 				if (ft_strnstr(str, "&&", ft_strlen(str)) != NULL)
 					ft_putstr_fd("minishell: \
-syntax error near unexpected token '&&' \n",
-									2);
+						syntax error near unexpected token '&&' \n", 2);
 				else if (ft_strnstr(str, "&", ft_strlen(str)) != NULL)
 					ft_putstr_fd("minishell: \
-syntax error near unexpected token '&' \n",
-									2);
+						syntax error near unexpected token '&' \n", 2);
 				return (1);
 			}
 			dif = 0;
@@ -92,8 +88,7 @@ int	print_error_msg_closing_brace(char *str)
 			if (dif == 0)
 			{
 				ft_putstr_fd("minishell: \
-syntax error near unexpected token ')' \n",
-								2);
+					syntax error near unexpected token ')' \n", 2);
 				return (1);
 			}
 			dif = 0;
@@ -108,8 +103,7 @@ int	print_error_msg_closing_square(char *str)
 	if (ft_strcmp(str, "]]"))
 	{
 		ft_putstr_fd("minishell: \
-syntax error near unexpected token ']]' \n",
-						2);
+			syntax error near unexpected token ']]' \n", 2);
 		return (1);
 	}
 	return (0);
@@ -120,8 +114,7 @@ int	print_error_msg_closing_curly(char *str)
 	if (ft_strcmp(str, "}"))
 	{
 		ft_putstr_fd("minishell: \
-syntax error near unexpected token '}' \n",
-						2);
+			syntax error near unexpected token '}' \n", 2);
 		return (1);
 	}
 	return (0);

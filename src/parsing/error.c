@@ -6,7 +6,7 @@
 /*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:41:15 by beata             #+#    #+#             */
-/*   Updated: 2024/06/06 17:05:24 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/07 12:20:17 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef enum e_token_types
 {
-	T_WORD, // Word token
+	T_WORD,      // Word token
 	T_RED_TO,   // Redirection to (>)
 	T_RED_FROM, // Redirection from (<)
 	T_DLESS,    // Here-document (<<)
@@ -127,21 +127,80 @@ int unvalid_symbols (char *input_string)
     return (0);
 }
 
+int missing_bracccet(char *input_string)
+{
+    int i;
+    int open_bracket;
+    int closed_bracket;
+
+    i = 0;
+    open_bracket = 0;
+    closed_bracket = 0;
+    while (input_string[i])
+    {
+        if (input_string[i] == '(')
+            open_bracket = 1;
+        if (input_string[i] == ')' && open_bracket)
+            closed_bracket = 1;
+        i++;
+    }
+    if (open_bracket && closed_bracket)
+        return (1);
+    return (0);
+}
+
+int	unvalid_bracket(char *input_string)
+{
+	int	i;
+	int	dif;
+
+	i = 0;
+	dif = 0;
+    if (missing_bracccet)
+    {
+	    while (input_string[i])
+        {
+            if ((input_string[i] != ' ' && input_string[i] != ')'))
+                dif = 1;
+            {
+                if (input_string[i] == ')')
+                    return (0);
+                else if (dif == 0)
+                {
+                    printf("minishell: \
+                        syntax error near unexpected token ')' \n");
+                    return (1);
+                }
+                dif = 0;
+            }
+            i++;
+        }
+    }
+    else
+        return (1);
+	return (0);
+}
+
 int wrong_input(t_args *shell_data, char *input)
 {
     int quote_error_flag;
     int symbol_error_flag;
+    int bracket_error_flag;
 
     quote_error_flag = 0;
     symbol_error_flag = 0;
+    bracket_error_flag = 0;
     quote_error_flag = unvalid_quotes(input);
     symbol_error_flag = unvalid_symbols(input);
-    if (quote_error_flag || symbol_error_flag)
+    bracket_error_flag = unvalid_bracket(input);
+    if (quote_error_flag || symbol_error_flag || bracket_error_flag)
     {
         shell_data->execution_result = 2;
         if (quote_error_flag)
             my_error((char *)&quote_error_flag, 39);
         else if (symbol_error_flag)
+            my_error((char *)&symbol_error_flag, shell_data->execution_result);
+        else if (bracket_error_flag)
             my_error((char *)&symbol_error_flag, shell_data->execution_result);
     }
     else if (empty_input_flag(input))
@@ -153,7 +212,7 @@ int wrong_input(t_args *shell_data, char *input)
 
 int main(int argc, char **argv)
 {
-    t_args shell_data; // Deklaracja zmiennej shell_data typu t_args
+    t_args shell_data;
 
     if (argc > 1)
     {
