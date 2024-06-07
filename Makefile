@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
+#    By: beata <beata@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/06 15:48:33 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/06/07 15:05:26 by beata            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= minishell
 CC 			= cc
-#CFLAGS 		= -Wall -Wextra -Werror -Iinclude
+CFLAGS 		= -Wall -Wextra -Werror -Iinclude
 
 LIBFTFOLDER = Libft
 LIBFT 		= $(LIBFTFOLDER)/libft.a
