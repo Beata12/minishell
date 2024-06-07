@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: beata <beata@student.42.fr>                +#+  +:+       +#+         #
+#    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/06/07 19:36:14 by aneekhra         ###   ########.fr        #
-=======
-#    Updated: 2024/06/07 15:05:26 by beata            ###   ########.fr        #
->>>>>>> refs/remotes/origin/main
+#    Created: 2024/06/07 22:20:09 by aneekhra          #+#    #+#              #
+#    Updated: 2024/06/07 22:20:13 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
