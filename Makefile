@@ -6,7 +6,7 @@
 #    By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 17:48:34 by aneekhra          #+#    #+#              #
-#    Updated: 2024/06/06 15:48:33 by aneekhra         ###   ########.fr        #
+#    Updated: 2024/06/07 19:36:14 by aneekhra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT 		= $(LIBFTFOLDER)/libft.a
 
 #  CFLAGS += -fsanitize=memory
 
-SRCS 	=  	minishell.c \
+SRCS 	=  	src/minishell.c \
 			src/utils/util.c \
 			src/parsing/parsing.c \
 			src/parsing/lexer.c \
@@ -34,6 +34,8 @@ SRCS 	=  	minishell.c \
 			src/execution/execution.c \
 			src/utils/special_char.c \
 			src/utils/signal.c \
+			src/execution/utils_exec.c \
+			src/execution/utils_error.c \
 
 
 OBJS 	= $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:41:36 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:43:39 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:11:34 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # define _POSIX_C_SOURCE 200809L
-# define HISTORY_FILE ".minishell_history"
+# define HISTORY_FILE "./.minishell_history"
 # define RE "\001\033[0m\002"
 # define RED "\001\033[1;31m\002"
 # define BLUE "\001\033[1;34m\002"
@@ -58,13 +58,19 @@ void	setup_signal_handlers(void);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 
+// Parsing
+char	*parser(char *input_command);
+
 // Prompt
 void	display_prompt(char **env);
 
 // Command execution
+void	ft_execute(char **cmds, char **env);
+void	ft_exec_built_in(char *cmd, char **env);
+void	ft_execute_cmd(char *argv, char *envp[]);
 char	**split_input(char *input);
-void	execute_command(Token *tokens, int token_count);
-int		ft_execvp(const char *args, char **argv);
+// int		ft_execvp(const char *args, char **argv);
+// void	ft_execute_command(Token *tokens, int token_count);
 
 // History management
 void	load_history(void);

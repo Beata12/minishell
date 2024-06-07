@@ -3,6 +3,8 @@
     "editor.defaultFormatter": "keyhr.42-c-format"
   },
   "files.associations": {
-    "parsing.h": "c"
+    "parsing.h": "c",
+    "cstdlib": "c",
+    "stdlib.h": "c"
   }
 }

@@ -6,37 +6,21 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/07 12:46:11 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:09:07 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/execution.h"
-#include "include/minishell.h"
-#include "include/parsing.h"
-
-char	**split_input(char *input)
-{
-	char	*arg;
-	int		position;
-	char	**args;
-
-	args = malloc(64 * sizeof(char *));
-	// Allocate space for 64 arguments
-	position = 0;
-	arg = strtok(input, " "); // Split input by spaces
-	while (arg != NULL)
-	{
-		args[position++] = arg;
-		arg = strtok(NULL, " ");
-	}
-	args[position] = NULL; // Null-terminate the array of arguments
-	return (args);
-}
+#include "../include/execution.h"
+#include "../include/minishell.h"
+#include "../include/parsing.h"
 
 void	display_prompt(char **env)
 {
 	char	*input;
 	char	**cmds;
+	char	*tmp;
+	char	**argv;
+	char	**args;
 
 	(void)env;
 	load_history();
@@ -50,12 +34,21 @@ void	display_prompt(char **env)
 		}
 		if (*input)
 			add_history(input);
-		if (!*input)
-		{ // parser(input);
-			continue ;
+		if (input[0] != '\0')
+		{
+			tmp = parser(input);
+			if (tmp != NULL)
+			{
+				cmds = ft_split(tmp, ' ');
+				if (cmds != NULL)
+				{
+					// printf("cmds: %s\n", cmds[0]);
+					ft_execute(cmds, env);
+					free(cmds);
+				}
+				free(tmp);
+			}
 		}
-		cmds = ft_split(input, '|'); // parse the input
-		ft_execute(cmds, env);
 		free(input);
 	}
 	save_history();
@@ -65,17 +58,55 @@ int	main(int argc, char **argv, char **env)
 {
 	int	g_exit_status;
 
+	setup_signal_handlers();
 	if (!argc && !argv)
 		return (0);
 	if (argc != 1)
 	{
 		exit(write(1, RED "	No arguments accepted!	\n" RE, 32));
 	}
-	g_exit_status = 0;
-	ft_printf(BLUE " 	WELCOME TO MINISHELL!		\n" RE);
-	setup_signal_handlers();
-	display_prompt(env);
+	else
+	{
+		g_exit_status = 0;
+		ft_printf(BLUE " 	🎉 WELCOME TO MINISHELL! 🎉		\n" RE);
+		display_prompt(env);
+	}
 	return (g_exit_status);
+}
+
+char	**split_input(char *input)
+{
+	char	*arg;
+	int		position;
+	char	**args;
+	char	*input_copy;
+	int		i;
+	int		num_args;
+
+	// Make a copy of the input to avoid modifying the original
+	input_copy = strdup(input);
+	if (!input_copy)
+		return (NULL);
+	// Estimate the number of arguments (space-separated words)
+	num_args = 1;
+	for (i = 0; input[i]; i++)
+	{
+		if (input[i] == ' ')
+			num_args++;
+	}
+	args = malloc((ft_strlen(input)) * sizeof(char *) + 1);
+	if (!args)
+		return (NULL);
+	// Allocate space for 64 arguments
+	position = 0;
+	arg = strtok(input, " "); // Split input by spaces
+	while (arg != NULL)
+	{
+		args[position++] = strdup(arg);
+		arg = strtok(NULL, " ");
+	}
+	args[position] = NULL; // Null-terminate the array of arguments
+	return (args);
 }
 
 // // Function to find the full path of an executable

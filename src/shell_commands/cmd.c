@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmarek <bmarek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:48:22 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/03 12:48:55 by bmarek           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:14:39 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parsing.h"
 
-void	execute_command(Token *tokens, int token_count)
+void	ft_execute_command(Token *tokens, int token_count)
 {
-	char	*args[64];
-	int		arg_count;
-	int		i;
-	int		pid_cd, pid_env, pid_echo, pid_pwd, pid_export, pid_unset;
-	
+	char *args[64];
+	int arg_count;
+	int i;
+	int pid_cd, pid_env, pid_echo, pid_pwd, pid_export, pid_unset;
+
 	arg_count = 0;
 	i = 0;
 	while (i < token_count)
@@ -37,7 +37,6 @@ void	execute_command(Token *tokens, int token_count)
 	}
 	else if (pid == 0)
 	{
-
 		if (ft_execvp(args[0], args) == 1)
 		{
 			perror("execvp() error");

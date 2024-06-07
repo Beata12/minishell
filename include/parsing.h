@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:42:00 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 17:00:14 by beata            ###   ########.fr       */
+/*   Updated: 2024/06/07 15:44:39 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef enum e_token_types
 	T_PIPE,     // Pipe (|)
 	T_QUOTE,    // Quote (single or double)
 	T_ERROR     // Error token
-} t_token_types;
+}			t_token_types;
 
 // Structure for tokens
 typedef struct
@@ -53,7 +53,7 @@ void		handlePipe(const char **ptr, Token *tokens, int *token_count);
 void		handleSpecial(const char **ptr);
 int			lex(const char *input, Token *tokens);
 void		print_token_info(Token *tokens, int token_count);
-void		parser(char *input_command);
+// void		parser(char *input_command);
 
 #endif
 

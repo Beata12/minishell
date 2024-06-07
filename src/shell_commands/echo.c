@@ -6,45 +6,73 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/04 14:05:16 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:23:46 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdio.h>
 
-char *expand_variable(const char *str) {
-    if (str[0] == '$') {
-        const char *var_name = str + 1; // Skip the '$' character
-        char *value = getenv(var_name);
-        if (value) {
-            return value;
-        }
-    }
-    return (char *)str;
+char	*expand_variable(const char *str)
+{
+	char	*value;
+
+	if (str[0] == '$')
+	{
+		const char *var_name = str + 1; // Skip the '$' character
+		value = getenv(var_name);
+		if (value)
+		{
+			return (value);
+		}
+	}
+	return ((char *)str);
 }
 
-int shell_echo(Token *args) {
-    int i = 1;
-    int newline = 1;
+int	shell_echo(Token *args)
+{
+	int		i;
+	int		newline;
+	char	*expanded_value;
 
-    if (args[i].value[0] != '\0' && strcmp(args[i].value, "-n") == 0) {
-        newline = 0;
-        i++;
-    }
+	i = 1;
+	newline = 1;
+	if (args[i].value[0] != '\0' && strcmp(args[i].value, "-n") == 0)
+	{
+		newline = 0;
+		i++;
+	}
+	while (args[i].value[0] != '\0')
+	{
+		expanded_value = expand_variable(args[i].value);
+		printf("%s", expanded_value);
+		if (args[++i].value[0] != '\0')
+		{
+			printf(" ");
+		}
+	}
+	if (newline)
+	{
+		printf("\n");
+	}
+	return (0);
+}
 
-    while (args[i].value[0] != '\0') {
-        char *expanded_value = expand_variable(args[i].value);
-        printf("%s", expanded_value);
-        if (args[++i].value[0] != '\0') {
-            printf(" ");
-        }
-    }
+int	main(int argc, char **argv)
+{
+	Token	tokens[1024];
+	int		i;
 
-    if (newline) {
-        printf("\n");
-    }
-
-    return 0;
+	// Populate tokens array with command line arguments
+	for (i = 0; i < argc; i++)
+	{
+		tokens[i].value2 = argv[i];
+	}
+	// Ensure the tokens array is null-terminated
+	tokens[argc].value2 = "";
+	// Call shell_echo with the tokens
+	shell_echo(tokens);
+	return (0);
 }
 
 // int shell_echo(Token tokens[], int token_count)
@@ -59,14 +87,5 @@ int shell_echo(Token *args) {
 // 	}
 
 //     printf("\n");
-//     return 0; // Success
-// }
-
-// int main(int argc, char *argv[])
-// {
-//	 if (argc > 1)
-//		 shell_echo(&argv[1]);
-//	 else
-//		 printf("Usage: %s [options] [text]\n", argv[0]);
-//	 return (0);
+//     return (0); // Success
 // }

@@ -6,7 +6,7 @@
 /*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 09:58:38 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/07 12:46:18 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:14:50 by aneekhra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,9 @@ int	shell_echo(Token *args)
 //   return (0); // Success
 // }
 
-// int main(int argc, char *argv[])
+// int	main(int argc, char *argv)
 // {
-//		if (argc > 1)
-//			shell_echo(&argv[1]);
-//		else
-//			printf("Usage: %s [options] [text]\n", argv[0]);
-//		return (0);
+// 	shell_echo(argv[1]);
+
+// 	return (0);
 // }
