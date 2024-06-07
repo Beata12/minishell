@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 07:42:37 by bmarek            #+#    #+#             */
-/*   Updated: 2024/06/07 12:45:45 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:47:11 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_args
 	char	**cmds;
 	char	**infiles;
 	char	**outfiles;
-	// t_list	*env;
+	t_list	*env;
 
 }			t_args;
 

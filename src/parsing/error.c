@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:41:15 by beata             #+#    #+#             */
-/*   Updated: 2024/06/07 12:45:12 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:39:25 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,62 @@ void	my_error(char *error_info, int error_code)
 	if (error_code == 2)
 		printf("Syntax error: unexpected token near `%s'\n", error_info);
 	if (error_code == 39)
-		printf("Syntax error: unable to locate closing quotation");
+		printf("Syntax error: unable to locate closing quotation\n");
 	if (error_code == 0)
 		printf("Warning: shell level (1000) too high, resetting to 1\n");
+}
+
+char	*ft_strnstr(char *big_str, char *small, size_t len)
+{
+	size_t	i;
+	size_t	n_len;
+	size_t	j;
+
+	n_len = strlen(small);
+	if (small[0] == '\0')
+		return ((char *)big_str);
+	i = 0;
+	while (big_str[i] && i < len)
+	{
+		j = 0;
+		while (big_str[i + j] && small[j] && (i + j) < len
+			&& big_str[i + j] == small[j])
+			j++;
+		if (j == n_len)
+			return ((char *)(big_str + i));
+		i++;
+	}
+	return (NULL);
+}
+
+int	unvalid_pipe(char *input_string)
+{
+	int	i;
+	int	dif;
+
+	i = 0;
+	dif = 0;
+	while (input_string[i])
+	{
+		if ((input_string[i] != ' ' && input_string[i] != '|'))
+			dif = 1;
+		if (input_string[i] == '|')
+		{
+			if (dif == 0)
+			{
+				if (ft_strnstr(input_string, "||", strlen(input_string)) != NULL)
+					printf("minishell: \
+						syntax error near unexpected token '||' \n");
+				else if (ft_strnstr(input_string, "|", strlen(input_string)) != NULL)
+					printf("minishell: \
+						syntax error near unexpected token '|' \n");
+				return (1);
+			}
+			dif = 0;
+		}
+		i++;
+	}
+	return (0);
 }
 
 int	unvalid_quotes(char *input_string)
@@ -103,7 +156,12 @@ int	unvalid_quotes(char *input_string)
 
 int	track_quote_type(char input_string)
 {
-	return (0);
+	if (input_string == '\"')
+		return ('\"');
+	if (input_string == '\'')
+		return ('\'');
+	else
+		return (0);
 }
 
 void	is_open_quote(char input_string, char *quote_flag)
@@ -186,13 +244,16 @@ int	unvalid_bracket(char *input_string)
 
 int	wrong_input(t_args *shell_data, char *input)
 {
+    int pipe_error_flag;
 	int	quote_error_flag;
 	int	symbol_error_flag;
 	int	bracket_error_flag;
 
+    pipe_error_flag = 0;
 	quote_error_flag = 0;
 	symbol_error_flag = 0;
 	bracket_error_flag = 0;
+    pipe_error_flag = unvalid_pipe(input);
 	quote_error_flag = unvalid_quotes(input);
 	symbol_error_flag = unvalid_symbols(input);
 	bracket_error_flag = unvalid_bracket(input);
@@ -201,10 +262,12 @@ int	wrong_input(t_args *shell_data, char *input)
 		shell_data->execution_result = 2;
 		if (quote_error_flag)
 			my_error((char *)&quote_error_flag, 39);
+        else if (pipe_error_flag)
+            my_error((char *)&pipe_error_flag, shell_data->execution_result);
 		else if (symbol_error_flag)
 			my_error((char *)&symbol_error_flag, shell_data->execution_result);
 		else if (bracket_error_flag)
-			my_error((char *)&symbol_error_flag, shell_data->execution_result);
+			my_error((char *)&bracket_error_flag, shell_data->execution_result);
 	}
 	else if (empty_input_flag(input))
 		shell_data->execution_result = 0;
@@ -241,6 +304,7 @@ int	parse_input(char *input)
 
 	if (wrong_input(&shell_data, input))
 		return (0);
+    split_token()
 	return (1);
 }
 
