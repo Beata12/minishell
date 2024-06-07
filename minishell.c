@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:08:59 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:02:09 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:27:47 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	display_prompt(char **env)
 {
 	char	*input;
 
-	// char	**cmds;
+	char	**cmds;
 	(void)env;
 	load_history();
 	while (1)
@@ -56,9 +56,9 @@ void	display_prompt(char **env)
 		// 	error_str();
 		else
 			// handle_redirection(input);
-			parser(input);
-		// cmds = ft_split(input, '|'); // parse the input
-		// ft_execute(cmds, env);
+			// parser(input);
+			cmds = ft_split(input, '|'); // parse the input
+		ft_execute(cmds, env);
 		free(input);
 	}
 	save_history();

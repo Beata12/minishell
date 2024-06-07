@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneekhra <aneekhra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: beata <beata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:42:00 by aneekhra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:44:33 by aneekhra         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:00:14 by beata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef enum e_token_types
 	T_PIPE,     // Pipe (|)
 	T_QUOTE,    // Quote (single or double)
 	T_ERROR     // Error token
-};
+} t_token_types;
 
 // Structure for tokens
 typedef struct
