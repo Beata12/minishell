@@ -1,7 +1,5 @@
 # Minishell
 
-# CURENTLY UNDER DEVELOPMENT
-
 ## Description
 
 Minishell is a project which is creating a simple shell in C, reproducing the behavior of bash. The shell provides a prompt, handles commands, and supports various features including command history, redirection, and pipes. This project is a collaborative effort, and we are currently focused on tokenization, parsing, and execution. We have implemented built-in commands and are working to ensure their correct functionality.
